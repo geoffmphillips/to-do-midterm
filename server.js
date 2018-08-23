@@ -38,10 +38,109 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
-// Home page
+// Get the Todos page.
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+/* Route for when a user posts a new todo.
+   Checks to see if string is empty.*/
+app.post("/todos", (req, res) => {
+  const inputTodo = req.body.todo;
+
+  knex('todos').insert(
+    {name: inputTodo,
+    is_complete: false,
+    user_id: req.body.userId,
+  })
+  
+  res.redirect("/");
+});
+
+/* Route to update a todo.*/
+app.put("/todos/todoId", (req, res) => {
+  //SQL query to update entire todo record.
+  knex('todos').where(`id = ${req.body.todoId}`)
+    .update({
+    id: req.body.todoId,
+    name: req.body.name,
+    is_complete: req.body.isComplete,
+    user_id: req.session.user_id
+  });
+
+  res.redirect("/");
+});
+
+/* Deletes a todo item from the DB.
+   Redirects the user to todos page */
+app.delete("/todos/todoId", (req, res) => {
+  knex('todos').where(`id: ${req.body.todoId}`).del();
+
+  res.redirect("/");
+});
+
+/* GET route for login page. Redirects to URLS
+   if the user is already logged in */
+app.get("/login/:id", (req, res) => {
+  if (req.session.user_id){
+    res.redirect("/")
+  }
+
+  res.render("login");
+})
+
+/* Post route for Login. Lets anyone log in, no checks. */
+app.post("/login", (req, res) => {
+  req.session.user_id = req.params.id;
+  res.redirect("/");
+})
+
+/* Route that gets the register page 
+   If user has a cookie, redirects to todos*/
+app.get("/register", (req, res) => {
+  if (req.session.user_id){
+    res.redirect("/")
+  }
+  res.render("register")
+})
+
+/* Post route for when someone registers. 
+   Front end will handle errors. If the 
+   request makes it to here, add to DB. */
+app.post("/register", (req, res) => {
+    const inputEmail = req.body.email;
+    const inputPassword = req.body.password;
+
+    knex('users').insert(
+      {email: inputEmail,
+      password: inputPassword,
+    })
+})
+
+app.get("/users", (req, res) => {
+  if(!req.session.user_id){
+    res.redirect("/login")
+  }
+  res.render("users")
+})
+
+app.put("/users", (req, res) => {
+
+  knex('todos').where(`id = ${req.body.todoId}`)
+    .update({
+    password: req.body.password,
+    avatar: req.body.isComplete,
+    favourite_food: req.session.userId,
+    description: req.body.description
+  })
+
+  res.redirect("/");
+})
+
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/");
+})
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
