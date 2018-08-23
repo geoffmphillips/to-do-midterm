@@ -40,6 +40,8 @@ app.use(cookieParser());
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
+/* ROUTES BELOW */
+
 // Get the Todos page.
 app.get("/", (req, res) => {
   res.render("index");
@@ -101,16 +103,13 @@ app.post("/login", (req, res) => {
         console.log("error", err);
         console.log("user not recognized");
         res.redirect("/register");
-        return
       } else if (!rows[0]) {
         console.log("user not recognized");
         res.redirect('/register');
-        return
-      } else if (rows[0].email === email) {
+      } else  {
         console.log("user recognized");
         res.cookie("email", userEmail);
         res.redirect('/');
-        return
       }
     })
   }
@@ -130,22 +129,17 @@ app.get("/register", (req, res) => {
    Front end will handle errors. If the 
    request makes it to here, add to DB. */
 app.post("/register", (req, res) => {
-    const inputEmail = req.body.email;
-    const inputPassword = req.body.password;
-
-    knex('users').insert(
-      {email: inputEmail,
-      password: inputPassword,
-    }).asCallback(function(err, rows){
-      if(err){
-          console.log("error", err);
-      }
-      else {
-          console.log("nice");
-          //knex.destroy();
-      }
-    })
-    res.redirect('/');
+  knex('users').insert(
+    {email: req.body.email,
+    password: req.body.password,
+  }).asCallback(function(err, rows){
+    if(err){
+      console.log("error", err);
+    } else {
+      console.log("nice");
+      res.redirect('/login');
+    }
+  })
 })
 
 app.get("/users", (req, res) => {
