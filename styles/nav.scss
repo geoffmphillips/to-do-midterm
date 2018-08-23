@@ -1,17 +1,10 @@
 $zindex-fixed: 1030;
 
-.container-fluid {
-  // display: flex;
-  // background-color: purple;
-  // justify-content: space-evenly;
-  // z-index: $zindex-fixed;
+.nav-header {
+  display: flex;
+  justify-content: space-evenly;
+  z-index: $zindex-fixed;
   h1 {
     color: #EEE;
-  }
-  // margin: 0.5em 0;
-  button {
-    border-radius: 0.5em;
-    // height: 2em;
-    // margin: 2em 0;
   }
 }
