@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>User profile</title>
+    <% include ./partials/_head %>
+  </head>
+  <div class="container">
+    <header class="blog-header py-3">
+      <% include ./partials/_header %>
+    </header>
+  </div>
+  <body>
+    <h1>Register</h1>
+    <form action="/register" method="post">
+      <img src="" alt="avatar">
+      <p>This will be the email here</p>
+      <input type="text" name="favorite food" class="form-control" placeholder="favorite food"></input>
+      <input type="text" name="description" class="form-control" placeholder="description"></input>
+      <button type="submit" name="update-user" class="btn btn-dark">Register</button>
+    </form>
+  </body>
+</html>
