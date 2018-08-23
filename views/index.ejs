@@ -12,18 +12,72 @@
   <body>
     <form class="form-container" action="/todos" method="post">
       <input name="todo" type="text" class="form-control" placeholder="What do you want to do"></input>
-      <button type="submit" class="btn btn-dark" name="create-todo">Submit</button>
+      <button type="submit" class="btn btn-secondary" name="create-todo">Submit</button>
     </form>
     <div class="card-container">
       <div class="card" style="width: 18rem;">
         <h5 class="card-title">Food <em>to eat</em></h5>
         <div class="card-body">
           <ul class="list-group">
-            <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Morbi leo risus<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Porta ac consectetur aasas<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Vestibulum at eros<a href="#" class="btn btn-primary">Go</a></li>
+            <li class="list-group-item">Cras justo odio
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item">category 2</button>
+                  <button type="submit" class="dropdown-item">category 3</button>
+                  <button type="submit" class="dropdown-item">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Dapibus ac facasdadssdi
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Morbi leo risusi
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Porta ac consectetur aasas
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Vestibulum at eros
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
           </ul>
         </div>
       </div>
@@ -76,6 +130,5 @@
         </div>
       </div>
     </div>
-
   </body>
 </html>
