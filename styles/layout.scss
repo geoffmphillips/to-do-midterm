@@ -3,11 +3,15 @@ body {
 
   .form-container {
     display: flex;
+    justify-content: center;
     input {
-      width: 30em;
+      width: 45em;
+      height: 5em;
     }
   }
   .card-container {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
 }

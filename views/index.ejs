@@ -4,32 +4,84 @@
     <title>Home Page</title>
     <% include ./partials/_head %>
   </head>
-  <div class="container">
-    <header class="blog-header py-3">
+    <header class=".nav-header">
       <% include ./partials/_header %>
     </header>
-  </div>
   <body>
     <form class="form-container" action="/todos" method="post">
       <input name="todo" type="text" class="form-control" placeholder="What do you want to do"></input>
-      <button type="submit" class="btn btn-dark" name="create-todo">Submit</button>
+      <button type="submit" class="btn btn-secondary" name="create-todo">Submit</button>
     </form>
     <div class="card-container">
-      <div class="card" style="width: 18rem;">
+      <div class="card p-3 mb-2 bg-primary text-white" style="width: 18rem;">
         <h5 class="card-title">Food <em>to eat</em></h5>
-        <div class="card-body">
+        <div class="card-body text-dark">
           <ul class="list-group">
-            <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Morbi leo risus<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Porta ac consectetur aasas<a href="#" class="btn btn-primary">Go</a></li>
-            <li class="list-group-item">Vestibulum at eros<a href="#" class="btn btn-primary">Go</a></li>
+            <li class="list-group-item">Cras justo odio
+              <form class="dropdown" method="POST" action="todos">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" name="category">category 2</button>
+                  <button type="submit" class="dropdown-item" name="category">category 3</button>
+                  <button type="submit" class="dropdown-item" name="category">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Dapibus ac facasdadssdi
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Morbi leo risusi
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Porta ac consectetur aasas
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
+            <li class="list-group-item">Vestibulum at eros
+              <form class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Change category
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button type="submit" class="dropdown-item" href="#">category 2</button>
+                  <button type="submit" class="dropdown-item" href="#">category 3</button>
+                  <button type="submit" class="dropdown-item" href="#">category 4</button>
+                </div>
+              </form>
+            </li>
           </ul>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
+      <div class="card p-3 mb-2 bg-success text-white"  style="width: 18rem;">
         <h5 class="card-title">Movies <em>to watch</em></h5>
-        <div class="card-body">
+        <div class="card-body text-dark">
           <ul class="list-group">
             <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-primary">Go</a></li>
@@ -39,9 +91,9 @@
           </ul>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
+      <div class="card p-3 mb-2 bg-danger text-white"  style="width: 18rem;">
         <h5 class="card-title">Stuff <em>to do</em></h5>
-        <div class="card-body">
+        <div class="card-body text-dark">
           <ul class="list-group">
             <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-primary">Go</a></li>
@@ -51,7 +103,7 @@
           </ul>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
+      <div class="card p-3 mb-2 bg-warning text-dark"  style="width: 18rem;">
         <h5 class="card-title">Bacon <em>to bacon</em></h5>
         <div class="card-body">
           <ul class="list-group">
@@ -63,9 +115,9 @@
           </ul>
         </div>
       </div>
-      <div class="card" style="width: 18rem;">
+      <div class="card p-3 mb-2 bg-dark text-white"  style="width: 18rem;">
         <h5 class="card-title">Sorry we couldn't categorize these todos</em></h5>
-        <div class="card-body">
+        <div class="card-body text-dark">
           <ul class="list-group">
             <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-success">Go</a></li>
             <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-success">Go</a></li>
@@ -76,6 +128,6 @@
         </div>
       </div>
     </div>
-
+    <% include ./partials/_scripts.ejs %>
   </body>
 </html>
