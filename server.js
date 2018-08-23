@@ -44,19 +44,39 @@ app.use("/api/users", usersRoutes(knex));
 
 // Get the Todos page.
 app.get("/", (req, res) => {
-  res.render("index");
+  if(!req.cookies.email){
+    res.redirect("/login")
+  } else {
+    res.render("index");
+  }
 });
 
 /* Route for when a user posts a new todo.
    Checks to see if string is empty.*/
 app.post("/todos", (req, res) => {
 
-  knex('todos').insert(
-    {name: inputTodo,
-    is_complete: false,
-  })
-  
-  res.redirect("/");
+  function idFinder(email){
+    knex.select("id").from("users").where({email: `${email}`})
+      .then((rows) => {
+        return rows[0].id;
+      }).then((id) => {
+        knex('todos').insert(
+          {name: req.body.todo,
+          is_complete: false,
+          user_id: id,
+          category: "movie"
+        }).asCallback(function(err, rows){
+          if(err){
+            console.log("error", err)
+          } else {
+            console.log("post added successfully")
+            res.redirect("/");
+          }
+        });
+      })
+  }
+  idFinder(req.cookies.email)
+
 });
 
 /* Route to update a todo.*/
@@ -67,7 +87,7 @@ app.put("/todos/todoId", (req, res) => {
     id: req.body.todoId,
     name: req.body.name,
     is_complete: req.body.isComplete,
-    user_id: req.session.user_id
+    user_id: req.session.email
   });
 
   res.redirect("/");
@@ -83,10 +103,7 @@ app.delete("/todos/todoId", (req, res) => {
 
 /* GET route for login page. Redirects to URLS
    if the user is already logged in */
-app.get("/login/", (req, res) => {
-  // if (req.session.user_id){
-  //   res.redirect("/")
-  // }
+app.get("/login", (req, res) => {
 
   res.render("login");
 })
