@@ -91,9 +91,30 @@ app.get("/login/", (req, res) => {
 })
 
 /* Post route for Login. Lets anyone log in, no checks. */
+/* THIS FUNCTION WORKS BUT IT IS VERY BAD PLZ REFACTOR */
 app.post("/login", (req, res) => {
-  req.session.user_id = req.params.id;
-  res.redirect("/");
+  let userEmail = req.body.email;
+
+  function emailChecker (email){
+    knex.select("email").from("users").where({email: `${email}`})
+    .asCallback(function(err, rows){
+      if(err){
+        console.log("error", err);
+        console.log("user not recognized");
+        res.redirect("/register");
+        return
+      } else if (!rows[0]) {
+        console.log("user not recognized");
+        res.redirect('/register');
+        return
+      } else if (rows[0].email === email) {
+        console.log("user recognized");
+        res.redirect('/');
+        return
+      }
+    })
+  }
+  emailChecker(userEmail);
 })
 
 /* Route that gets the register page 
