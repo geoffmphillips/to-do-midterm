@@ -83,9 +83,9 @@ app.delete("/todos/todoId", (req, res) => {
 /* GET route for login page. Redirects to URLS
    if the user is already logged in */
 app.get("/login/", (req, res) => {
-  if (req.session.user_id){
-    res.redirect("/")
-  }
+  // if (req.session.user_id){
+  //   res.redirect("/")
+  // }
 
   res.render("login");
 })
@@ -115,7 +115,16 @@ app.post("/register", (req, res) => {
     knex('users').insert(
       {email: inputEmail,
       password: inputPassword,
+    }).asCallback(function(err, rows){
+      if(err){
+          console.log("error", err);
+      }
+      else {
+          console.log("nice");
+          //knex.destroy();
+      }
     })
+    res.redirect('/');
 })
 
 app.get("/users", (req, res) => {
