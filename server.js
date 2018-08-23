@@ -53,6 +53,7 @@ app.post("/todos", (req, res) => {
     is_complete: false,
     user_id: req.body.userId,
   })
+  //knex.destroy();
   
   res.redirect("/");
 });
@@ -81,7 +82,7 @@ app.delete("/todos/todoId", (req, res) => {
 
 /* GET route for login page. Redirects to URLS
    if the user is already logged in */
-app.get("/login/:id", (req, res) => {
+app.get("/login/", (req, res) => {
   if (req.session.user_id){
     res.redirect("/")
   }
@@ -98,9 +99,9 @@ app.post("/login", (req, res) => {
 /* Route that gets the register page 
    If user has a cookie, redirects to todos*/
 app.get("/register", (req, res) => {
-  if (req.session.user_id){
-    res.redirect("/")
-  }
+  // if (req.session.user_id){
+  //   res.redirect("/")
+  // }
   res.render("register")
 })
 
