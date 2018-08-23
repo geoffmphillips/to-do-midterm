@@ -8,6 +8,7 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
+const cookieParser= require("cookie-parser")
 
 const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -34,6 +35,7 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+app.use(cookieParser());
 
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
@@ -106,6 +108,7 @@ app.post("/login", (req, res) => {
         return
       } else if (rows[0].email === email) {
         console.log("user recognized");
+        res.cookie("email", userEmail);
         res.redirect('/');
         return
       }
@@ -166,7 +169,7 @@ app.put("/users", (req, res) => {
 })
 
 app.post("/logout", (req, res) => {
-  req.session = null;
+  res.clearCookie("email")
   res.redirect("/");
 })
 
