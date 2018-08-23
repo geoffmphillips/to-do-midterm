@@ -51,8 +51,7 @@ app.get("/", (req, res) => {
   }
 });
 
-/* Route for when a user posts a new todo.
-   Checks to see if string is empty.*/
+/* Route for when a user posts a new todo.*/
 app.post("/todos", (req, res) => {
 
   function idFinder(email){
