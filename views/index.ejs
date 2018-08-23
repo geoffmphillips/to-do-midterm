@@ -2,16 +2,41 @@
 <html lang="en">
   <head>
     <title>Home Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css">
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css">
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css">
+    <link rel="stylesheet" href="/styles/nav.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-  </head>
 
+  </head>
+  <div class="container">
+    <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-1">
+            <p class="text-muted">Bacon</p>
+          </div>
+          <div class="col-4 pt-1">
+            <h1 class="blog-header-logo text-dark">todo</h1>
+          </div>
+          <div class="col-4 pt-1">
+            <button type="button" name="logout" class="btn btn-sm btn-outline-secondary">logout</button>
+          </div>
+        </div>
+    </header>
+  </div>
   <body>
     <h1>Hello World!</h1>
+    <form action="/todos" method="post">
+      <textarea name="todo" type="text" placeholder="What do you want TO DO?"></textarea>
+      <button type="submit" name="create-todo">Create</button>
+    </form>
   </body>
 </html>
