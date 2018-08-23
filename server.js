@@ -46,14 +46,11 @@ app.get("/", (req, res) => {
 /* Route for when a user posts a new todo.
    Checks to see if string is empty.*/
 app.post("/todos", (req, res) => {
-  const inputTodo = req.body.todo;
 
   knex('todos').insert(
     {name: inputTodo,
     is_complete: false,
-    user_id: req.body.userId,
   })
-  //knex.destroy();
   
   res.redirect("/");
 });
