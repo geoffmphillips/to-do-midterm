@@ -1,21 +1,23 @@
 $(function() {
-  function createForm() {
-    var output = $('<form>')
+  function createDropdownForm() {
+    var formOutput = $('<form>')
       .attr('class', 'dropdown')
       .attr('method', 'POST')
       .attr('action', 'todos');
+
+    console.log("Form: ", formOutput[0]);
 
     // The dropdownButton is the button itself while the divDropdown is the container for the buttons that will drop down on click
     var dropdownButton = createDropdownButton();
     var divDropdown = createDivDropdown();
 
-    output.append(dropdownButton);
-    output.append(divDropdown);
-    return output;
+    formOutput.append(dropdownButton);
+    formOutput.append(divDropdown);
+    return formOutput;
   }
 
   function createDropdownButton() {
-    var output = $('<button>')
+    var dropdownButtonOutput = $('<button>')
       .attr('id', 'dropdownMenuButton')
       .attr('class', 'btn btn-secondary dropdown-toggle')
       .attr('type', 'button')
@@ -25,18 +27,18 @@ $(function() {
 
     var editIcon = createEditIcon()
 
-    output.append(editIcon);
-    return output;
+    dropdownButtonOutput.append(editIcon);
+    return dropdownButtonOutput;
   }
 
   function createEditIcon() {
-    var output =$('<i>')
+    var iconOutput =$('<i>')
       .attr('class', 'far fa-edit');
-    return output;
+    return iconOutput;
   }
 
   function createDivDropdown() {
-    var output = $('div')
+    var dropdownDivOutput = $('<div>')
       .attr('class', 'dropdown-menu')
       .attr('aria-labelledby', 'dropdownMenuButton')
 
@@ -45,35 +47,36 @@ $(function() {
     var buttonToRead = createSubmitButton("Read");
     var buttonToBuy = createSubmitButton("Buy");
 
-    output.append(buttonToEat);
-    output.append(buttonToWatch);
-    output.append(buttonToRead);
-    output.append(buttonToBuy);
+    dropdownDivOutput.append(buttonToEat);
+    dropdownDivOutput.append(buttonToWatch);
+    dropdownDivOutput.append(buttonToRead);
+    dropdownDivOutput.append(buttonToBuy);
 
-    return output;
+    return dropdownDivOutput;
   }
 
   function createSubmitButton(category) {
-    var output = $('<button>')
+    var submitButtonOutput = $('<button>')
       .attr('class', 'dropdown-item')
       .attr('type', 'submit')
       .attr('name', category)
       .text("To " + category);
-    return output;
+    return submitButtonOutput;
   }
 
-  function createListElement(todoText) {
-    var output = $('<li>')
-      .attr('class', 'list-group-item')
-      .text(todoText);
+  function createListElement(content) {
+    var listElementOutput = $("<li>");
+    listElementOutput.attr('class', 'list-group-item')
+    .append($('<p>').text(content));
 
-    var form = createForm();
-    output.append(form);
-    return output;
+    var newForm = createDropdownForm();
+    console.log(newForm);
+    listElementOutput.append(newForm);
+    return listElementOutput;
   }
 
-  function renderList(listName, todoText) {
-    var listElement = createListElement(todoText);
+  function addToList(listName, todoContent) {
+    var listElement = createListElement(todoContent);
 
     switch (listName) {
       case "To Eat":
@@ -85,39 +88,41 @@ $(function() {
       case "To Read":
         $('#to-read').append(listElement);
         break;
-      case: "To Buy":
+      case "To Buy":
         $('#to-buy').append(listElement);
         break;
       default:
         $('#uncategorized').append(listElement);
         break;
-    }
+      }
+
+      //stuff
   }
+
 
   $("form#new-list-item").on("submit", function(event) {
     event.preventDefault();
 
-    var todoElement = $(this).children("input");
-    var todoText = todoElement.val();
+    var input = $(this).children("input");;
 
     /*
       API LOGIC HERE
     */
 
-    var category;
+    var category = "To Read";
+    addToList(category, input.val());
 
     $.post('/todos').done(function() {
-      todoText.val("");
-      renderList("To Eat", todoText);
+      input.val("");
     });
   });
 
   // Event delegation example. Needs to be replaced with delete/complete code
-  $('ul.list-group').on('click', 'li', function(event) {
-    var li = $(event.target);
-    li.toggleClass('done');
-    $.post('todos').done(function() {
-
-    });
-  });
+  // $('ul.list-group').on('click', 'li', function(event) {
+  //   var li = $(event.target);
+  //   li.toggleClass('done');
+  //   $.post('todos').done(function() {
+  //
+  //   });
+  // });
 });
