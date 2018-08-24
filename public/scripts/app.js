@@ -6,15 +6,16 @@ $(function() {
       .attr('method', 'POST')
       .attr('action', 'todos');
 
-    var dropdownMenu = createDropdownMenu();
+    // The dropdownButton is the button itself while the divDropdown is the container for the buttons that will drop down on click
+    var dropdownButton = createDropdownButton();
     var divDropdown = createDivDropdown();
 
-    output.append(dropdownMenu);
+    output.append(dropdownButton);
     output.append(divDropdown);
     return output;
   }
 
-  function createDropdownMenu() {
+  function createDropdownButton() {
     var output = $('<button>')
       .attr('id', 'dropdownMenuButton')
       .attr('class', 'btn btn-secondary dropdown-toggle')
@@ -71,39 +72,10 @@ $(function() {
     return output;
   }
 
-
-  `<li class="list-group-item">Cras justo odio
-    <form class="dropdown" method="POST" action="todos">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button type="submit" class="dropdown-item" name="eat">To Eat</button>
-        <button type="submit" class="dropdown-item" name="watch">To Watch</button>
-        <button type="submit" class="dropdown-item" name="read">To Read</button>
-        <button type="submit" class="dropdown-item" name="category">To Buy</button>
-      </div>
-    </form>
-  </li>`
-
-    // $.get('todos').done(function() {
-    //
-    // });
-
-    // var tweetText = textArea.val();
-    // var data = textArea.serialize();
-    // var error = $(this).siblings(".error");
-    // var counter = textArea.siblings(".counter");
-    //
-    // if (error.text() !== "") {
-    //   error.slideUp("fast");
-    // }
-  $('form.form-container').on('submit', function(event) {
-    event.preventDefault();
-
-    var todoText = String($(this).children('input').val());
-    console.log(todoText);
+  $.get('todos').done(function() {
 
   });
+
 
   $('ul.list-group').on('click', 'li', function(event) {
     var li = $(event.target);
