@@ -13,13 +13,13 @@
       <button type="submit" class="btn btn-secondary" name="create-todo">Submit</button>
     </form>
     <div class="card-container">
-      <div class="card p-3 mb-2 bg-primary text-white" style="width: 18rem;">
+      <div class="card p-3 mb-2 bg-primary text-white">
         <h5 class="card-title">Food <em>to eat</em></h5>
         <div class="card-body text-dark">
           <ul class="list-group">
             <li class="list-group-item">Cras justo odio
               <form class="dropdown" method="POST" action="todos">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-edit"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <button type="submit" class="dropdown-item" name="category">category 2</button>
@@ -128,6 +128,5 @@
         </div>
       </div>
     </div>
-    <% include ./partials/_scripts.ejs %>
   </body>
 </html>
