@@ -1,8 +1,10 @@
 $(function() {
   function createDropdownForm() {
+    var uniqueId = generateUniqueId();
     var formOutput = $('<form>')
       .attr('class', 'dropdown')
       .attr('method', 'POST')
+      .attr('name', uniqueId)
       .attr('action', 'todos');
 
     console.log("Form: ", formOutput[0]);
@@ -14,6 +16,17 @@ $(function() {
     formOutput.append(dropdownButton);
     formOutput.append(divDropdown);
     return formOutput;
+  }
+
+  function generateUniqueId() {
+    var output = "";
+    var alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    for (var i = 0; i < 6; i++) {
+      output += alphanumeric[Math.floor(Math.random() * alphanumeric.length)]
+    }
+
+    return output;
   }
 
   function createDropdownButton() {
@@ -40,7 +53,7 @@ $(function() {
   function createDivDropdown() {
     var dropdownDivOutput = $('<div>')
       .attr('class', 'dropdown-menu')
-      .attr('aria-labelledby', 'dropdownMenuButton')
+      .attr('aria-labelledby', 'dropdownMenuButton');
 
     var buttonToEat = createSubmitButton("Eat");
     var buttonToWatch = createSubmitButton("Watch");
@@ -67,10 +80,10 @@ $(function() {
   function createListElement(content) {
     var listElementOutput = $("<li>");
     listElementOutput.attr('class', 'list-group-item')
-    .append($('<p>').text(content));
+      .attr('name', uniqueId)
+      .append($('<p>').text(content));
 
     var newForm = createDropdownForm();
-    console.log(newForm);
     listElementOutput.append(newForm);
     return listElementOutput;
   }
@@ -108,7 +121,7 @@ $(function() {
     */
 
     var category = "To Read";
-    addToList(category, String(input.val()));
+    addToList(category, input.val());
 
     $.post('/todos').done(function() {
       input.val("");
