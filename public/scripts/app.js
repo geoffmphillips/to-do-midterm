@@ -95,8 +95,6 @@ $(function() {
         $('#uncategorized').append(listElement);
         break;
       }
-
-      //stuff
   }
 
 
@@ -110,7 +108,7 @@ $(function() {
     */
 
     var category = "To Read";
-    addToList(category, input.val());
+    addToList(category, String(input.val()));
 
     $.post('/todos').done(function() {
       input.val("");

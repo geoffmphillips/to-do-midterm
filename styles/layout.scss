@@ -2,16 +2,26 @@ body {
   background-color: #EEE;
 
   .form-container {
+    padding: 1em 0;
     display: flex;
     justify-content: center;
     input {
-      width: 45em;
-      height: 5em;
+      font-size: 1.25rem;
+      width: 35em;
+      height: 4em;
     }
   }
   .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+
+    h1 {
+      height: 100%;
+    }
+
+    #card {
+      padding: 0 0 0 0;
+    }
   }
 }
