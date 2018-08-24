@@ -8,7 +8,7 @@
       <% include ./partials/_header %>
     </header>
   <body>
-    <form class="form-container" action="/todos" method="post">
+    <form id="new-list-item" class="form-container" action="/todos" method="post">
       <input name="todo" type="text" class="form-control" placeholder="What do you want to do"></input>
       <button type="submit" class="btn btn-secondary" name="create-todo">Submit</button>
     </form>
@@ -16,7 +16,7 @@
       <div class="card p-3 mb-2 bg-primary text-white">
         <h5 class="card-title">Food <em>to eat</em></h5>
         <div class="card-body text-dark">
-          <ul class="list-group">
+          <ul id="to-eat" class="list-group">
             <li class="list-group-item">Cras justo odio
               <form class="dropdown" method="POST" action="todos">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-edit"></i>
@@ -82,7 +82,7 @@
       <div class="card p-3 mb-2 bg-success text-white"  style="width: 18rem;">
         <h5 class="card-title">Movies <em>to watch</em></h5>
         <div class="card-body text-dark">
-          <ul class="list-group">
+          <ul id="to-watch" class="list-group">
             <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Morbi leo risus<a href="#" class="btn btn-primary">Go</a></li>
@@ -94,7 +94,7 @@
       <div class="card p-3 mb-2 bg-danger text-white"  style="width: 18rem;">
         <h5 class="card-title">Stuff <em>to do</em></h5>
         <div class="card-body text-dark">
-          <ul class="list-group">
+          <ul id="to-read" class="list-group">
             <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Morbi leo risus<a href="#" class="btn btn-primary">Go</a></li>
@@ -106,7 +106,7 @@
       <div class="card p-3 mb-2 bg-warning text-dark"  style="width: 18rem;">
         <h5 class="card-title">Bacon <em>to bacon</em></h5>
         <div class="card-body">
-          <ul class="list-group">
+          <ul id="to-buy" class="list-group">
             <li class="list-group-item">Cras justo odio<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Dapibus ac facasdadssdi<a href="#" class="btn btn-primary">Go</a></li>
             <li class="list-group-item">Morbi leo risus<a href="#" class="btn btn-primary">Go</a></li>
