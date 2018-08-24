@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>Login</title>
     <% include ./partials/_head %>
   </head>
   <div class="container">
@@ -12,9 +12,9 @@
   <body>
     <h1>Login</h1>
     <form action="/login" method="post">
-      <textarea name="email" type="text" placeholder="email"></textarea>
-      <textarea name="password" type="text" placeholder="password"></textarea>
-      <button type="submit" name="login">Login</button>
+      <input type="text" name="email" class="form-control" placeholder="email"></input>
+      <input type="text" name="password"class="form-control" placeholder="password"></input>
+      <button type="submit" name="login" class="btn btn-dark">Login</button>
     </form>
   </body>
 </html>
