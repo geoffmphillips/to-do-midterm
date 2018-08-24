@@ -6,7 +6,6 @@ const PORT        = process.env.PORT || 8080;
 const ENV         = process.env.ENV || "development";
 const express     = require("express");
 const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
 const app         = express();
 const cookieParser= require("cookie-parser")
 
@@ -16,7 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
 // Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
+// const usersRoutes = require("./routes/users");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -28,17 +27,11 @@ app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
-  debug: true,
-  outputStyle: 'expanded'
-}));
 app.use(express.static("public"));
 app.use(cookieParser());
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+// app.use("/api/users", usersRoutes(knex));
 
 /* ROUTES BELOW */
 
@@ -134,7 +127,7 @@ app.post("/login", (req, res) => {
   emailChecker(userEmail);
 })
 
-/* Route that gets the register page 
+/* Route that gets the register page
    If user has a cookie, redirects to todos*/
 app.get("/register", (req, res) => {
   if (req.cookies.email){
@@ -143,8 +136,8 @@ app.get("/register", (req, res) => {
   res.render("register")
 })
 
-/* Post route for when someone registers. 
-   Front end will handle errors. If the 
+/* Post route for when someone registers.
+   Front end will handle errors. If the
    request makes it to here, add to DB. */
 app.post("/register", (req, res) => {
   knex('users').insert(
