@@ -109,7 +109,7 @@ $(function() {
       API LOGIC HERE
     */
 
-    var category = "To Eat";
+    var category = "To Read";
     addToList(category, input.val());
 
     $.post('/todos').done(function() {
