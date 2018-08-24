@@ -137,9 +137,9 @@ app.post("/login", (req, res) => {
 /* Route that gets the register page 
    If user has a cookie, redirects to todos*/
 app.get("/register", (req, res) => {
-  // if (req.session.user_id){
-  //   res.redirect("/")
-  // }
+  if (req.cookies.email){
+    res.redirect("/")
+  }
   res.render("register")
 })
 
@@ -154,7 +154,6 @@ app.post("/register", (req, res) => {
     if(err){
       console.log("error", err);
     } else {
-      console.log("nice");
       res.redirect('/login');
     }
   })
@@ -172,7 +171,6 @@ app.get("/users", (req, res) => {
           console.log("error", err);
         } else {
           templateVars = rows[0];
-          console.log(templateVars.email);
           res.render('users', templateVars);
         }
       })
@@ -180,24 +178,26 @@ app.get("/users", (req, res) => {
   getTemplateVars(req.cookies.email)
 })
 
-app.put("/users", (req, res) => {
+app.post("/users", (req, res) => {
 
-  // function userUpdater (email)
-  //     knex('users').where({email: `${email}`})
-  //       .update({
-  //       password: req.body.password,
-  //       favorite_food: req.body.favorite_food,
-  //       description: req.body.description
-  //     }).asCallback(function(err, rows){
-  //       if(err){
-  //         console.log("error", err);
-  //       } else {
-  //         console.log("Information updated");
-  //         res.redirect('/users');
-  //       }
-  //     })
-
-  // userUpdater(req.cookies.email)
+  function userUpdater (email, params) {
+      knex('users').where({email: `${email}`})
+        .update({
+        avatar: params.avatar,
+        name: params.name,
+        password: params.password,
+        favorite_food: params.favorite_food,
+        description: params.description
+      }).asCallback(function(err, rows){
+        if(err){
+          console.log("error", err);
+        } else {
+          console.log("Information updated");
+          res.redirect('/users');
+        }
+      })
+  }
+  userUpdater(req.cookies.email, req.body)
 })
 
 app.post("/logout", (req, res) => {
