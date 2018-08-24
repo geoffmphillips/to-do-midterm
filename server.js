@@ -64,7 +64,10 @@ app.post("/todos", (req, res) => {
           is_complete: false,
           user_id: id,
           category: "movie"
-        }).asCallback(function(err, rows){
+        }).catch((err) => {
+          console.log("error", err);
+        })
+        .asCallback(function(err, rows){
           if(err){
             console.log("error", err)
           } else {
@@ -75,7 +78,6 @@ app.post("/todos", (req, res) => {
       })
   }
   idFinder(req.cookies.email)
-
 });
 
 /* Route to update a todo.*/
@@ -159,23 +161,43 @@ app.post("/register", (req, res) => {
 })
 
 app.get("/users", (req, res) => {
-  if(!req.session.user_id){
+  if(!req.cookies.email){
     res.redirect("/login")
   }
-  res.render("users")
+  let templateVars;
+    function getTemplateVars(email){
+      knex.select().from('users').where({email: `${email}`})
+      .asCallback(function(err, rows){
+        if(err){
+          console.log("error", err);
+        } else {
+          templateVars = rows[0];
+          console.log(templateVars.email);
+          res.render('users', templateVars);
+        }
+      })
+    }
+  getTemplateVars(req.cookies.email)
 })
 
 app.put("/users", (req, res) => {
 
-  knex('todos').where(`id = ${req.body.todoId}`)
-    .update({
-    password: req.body.password,
-    avatar: req.body.isComplete,
-    favourite_food: req.session.userId,
-    description: req.body.description
-  })
+  // function userUpdater (email)
+  //     knex('users').where({email: `${email}`})
+  //       .update({
+  //       password: req.body.password,
+  //       favorite_food: req.body.favorite_food,
+  //       description: req.body.description
+  //     }).asCallback(function(err, rows){
+  //       if(err){
+  //         console.log("error", err);
+  //       } else {
+  //         console.log("Information updated");
+  //         res.redirect('/users');
+  //       }
+  //     })
 
-  res.redirect("/");
+  // userUpdater(req.cookies.email)
 })
 
 app.post("/logout", (req, res) => {
