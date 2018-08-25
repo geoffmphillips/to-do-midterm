@@ -15,6 +15,23 @@ $(function() {
     return formOutput;
   }
 
+  function createDeleteForm (id) {
+    var formOutput = $('<form>')
+      .attr('action', '/todos/:todoId')
+      .attr('method', 'POST')
+      .attr('name', id);
+
+    var deleteButton = createDeleteButton();
+    formOutput.append(deleteButton);
+    return formOutput;
+  }
+
+  function createDeleteButton() {
+    var deleteButton = $('<i>')
+    .attr('class','far fa-trash-alt')
+    return deleteButton;
+  }
+
   function createDropdownButton() {
     var dropdownButtonOutput = $('<button>')
       .attr('id', 'dropdownMenuButton')
@@ -68,8 +85,11 @@ $(function() {
     listElementOutput.attr('class', 'list-group-item')
       .append($('<p>').text(content));
 
-    var newForm = createDropdownForm(id);
-    listElementOutput.append(newForm);
+    var newEditForm = createDropdownForm(id);
+    var newDeleteForm = createDeleteForm(id);
+    listElementOutput.append(newEditForm);
+    listElementOutput.append(newDeleteForm);
+
     return listElementOutput;
   }
 
