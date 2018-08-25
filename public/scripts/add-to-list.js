@@ -17,7 +17,7 @@ $(function() {
 
   function createDeleteForm (id) {
     var formOutput = $('<form>')
-      .attr('action', '/todos/todoId')
+      .attr('action', '/todos/:todoId')
       .attr('method', 'POST')
       .attr('name', id);
 
@@ -28,7 +28,7 @@ $(function() {
 
   function createDeleteButton() {
     var deleteButton = $('<i>')
-    .attr('class','far fa-trash-alt');
+    .attr('class','far fa-trash-alt')
     return deleteButton;
   }
 
