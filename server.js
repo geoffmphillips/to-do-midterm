@@ -129,14 +129,10 @@ app.post("/login", (req, res) => {
     knex.select("email").from("users").where({email: `${email}`})
     .asCallback(function(err, rows){
       if(err){
-        console.log("error", err);
-        console.log("user not recognized");
-        res.redirect("/register");
+        return (`Error: ${err}`);
       } else if (!rows[0]) {
-        console.log("user not recognized");
-        res.redirect('/register');
+        alert('Email incorrect, please enter a valid email!')
       } else  {
-        console.log("user recognized");
         res.cookie("email", userEmail);
         res.redirect('/');
       }
