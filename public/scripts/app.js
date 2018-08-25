@@ -2,10 +2,13 @@ $(function() {
 
 
   // Event delegation example. Needs to be replaced with delete/complete code
-  $('ul.list-group').on('click', 'li', function(event) {
+  $('ul.list-group').on('click', 'form', function(event) {
     var li = $(event.target);
-    li.remove();
-    $.ajax('todos').done(function() {
+    console.log(li[0]);
+    $.ajax({
+      action: 'todos/',
+      method: 'delete',
+    }).done(function() {
 
     });
   });

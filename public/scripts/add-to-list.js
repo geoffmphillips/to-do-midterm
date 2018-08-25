@@ -1,6 +1,7 @@
 $(function() {
   function createDropdownForm() {
     var formOutput = $('<form>')
+      // .attr('name', id);
       .attr('class', 'dropdown')
       .attr('method', 'POST')
       .attr('action', 'todos');
@@ -72,10 +73,10 @@ $(function() {
     return listElementOutput;
   }
 
-  function addToList(listName, todoContent) {
+  function addToList(todoList, todoContent) {
     var listElement = createListElement(todoContent);
 
-    switch (listName) {
+    switch (todoList) {
       case "To Eat":
         $('#to-eat').append(listElement);
         break;
@@ -94,10 +95,26 @@ $(function() {
       }
   }
 
+  function renderLists(lists) {
+    lists.forEach(function(todo) {
+      addToList(todo.category, todo.name);
+    });
+  }
+
+  $.get("/todos").done(function(lists) {
+    $("ul#to-eat").empty();
+    $("ul#to-watch").empty();
+    $("ul#to-read").empty();
+    $("ul#to-buy").empty();
+    $("ul#uncategorized").empty();
+    renderLists(lists);
+  });
+
   $("form#new-list-item").on("submit", function(event) {
     event.preventDefault();
 
-    var input = $(this).children("input");;
+    var input = $(this).children("input");
+    var todoText = input.serialize();
 
     /*
       API LOGIC HERE
@@ -106,7 +123,7 @@ $(function() {
     var category = "To Read";
     addToList(category, input.val());
 
-    $.post('/todos').done(function() {
+    $.post('/todos', todoText).done(function() {
       input.val("");
     });
   });
