@@ -80,14 +80,22 @@ app.post("/todos", (req, res) => {
   });
 });
 
-app.post("/todos/:todoId", (req, res) => {
-  todosDataHelpers.updateTodoById(req.params.todoId, (err, rows) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/");
-    }
-  });
+
+// Route to update a todo
+app.post("/todos/:todoId/:category", (req, res) => {
+  console.log("REQ PARAMS CATEGORY", req.params.category)
+  knex('todos').where({id: req.params.todoId})
+    .update({
+    category: req.params.category
+  }).asCallback(function(err, rows) {
+      if(err) {
+        console.log("error", err)
+      } else {
+        console.log("NICE");
+      }
+  })  ;
+
+  res.redirect("/");
 });
 
 app.post("/todos/:todoId/delete", (req, res) => {
