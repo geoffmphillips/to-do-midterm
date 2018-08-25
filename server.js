@@ -69,31 +69,20 @@ app.get("/todos", (req, res) => {
 
 /* Route for when a user posts a new todo.*/
 app.post("/todos", (req, res) => {
-
-  function idFinder(email) {
-    knex.select("id").from("users").where({email: `${email}`})
-     .then((rows) => { return rows[0].id; })
-     .then((id) => {
-       console.log(id);
-        knex('todos').insert(
-          {name: req.body.todo,
-          is_complete: false,
-          user_id: id,
-          category: "To Watch",
-        }).catch((err) => {
-          console.log("error", err);
-        })
-        .asCallback(function(err, rows){
-          if(err){
-            console.log("error", err)
-          } else {
-            console.log("post added successfully")
-            res.redirect("/");
-          }
-        });
+  usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const todo = todosDataHelpers.createTodoObject(req.body.todo, rows.id)
+      todosDataHelpers.saveToDo(todo, (err, rows) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.redirect("/");
+        }
       });
-  }
-  idFinder(req.cookies.email);
+    }
+  });
 });
 
 /* Route to update a todo */
