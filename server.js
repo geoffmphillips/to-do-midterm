@@ -67,55 +67,47 @@ app.get("/todos", (req, res) => {
   }
 });
 
-/* Route for when a user posts a new todo.*/
+// Route for when a user posts a new todo
 app.post("/todos", (req, res) => {
-
-  function idFinder(email) {
-    knex.select("id").from("users").where({email: `${email}`})
-     .then((rows) => { return rows[0].id; })
-     .then((id) => {
-       console.log(id);
-        knex('todos').insert(
-          {name: req.body.todo,
-          is_complete: false,
-          user_id: id,
-          category: "To Watch",
-        }).catch((err) => {
-          console.log("error", err);
-        })
-        .asCallback(function(err, rows){
-          if(err){
-            console.log("error", err)
-          } else {
-            console.log("post added successfully")
-            res.redirect("/");
-          }
-        });
+  usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const todo = todosDataHelpers.createTodoObject(req.body.todo, rows.id)
+      todosDataHelpers.saveTodo(todo, (err, rows) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.redirect("/");
+        }
       });
-  }
-  idFinder(req.cookies.email);
+    }
+  });
 });
 
-/* Route to update a todo */
-app.put("/todos/todoId", (req, res) => {
+// Route to update a todo
+app.post("/todos/:todoId", (req, res) => {
   //SQL query to update entire todo record.
   knex('todos').where(`id = ${req.body.todoId}`)
     .update({
     id: req.body.todoId,
     name: req.body.name,
-    is_complete: req.body.isComplete,
+    is_complete: req.body.is_complete,
     user_id: req.session.email
   });
 
   res.redirect("/");
 });
 
-/* Deletes a todo item from the DB.
-   Redirects the user to todos page */
-app.delete("/todos/todoId", (req, res) => {
-  knex('todos').where(`id: ${req.body.todoId}`).del();
-
-  res.redirect("/");
+app.delete("/todos/:todoId/delete", (req, res) => {
+  console.log(req.params.id);
+  todosDataHelpers.deleteTodoById(req.body.id, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/");
+    }
+  });
 });
 
 /* GET route for login page. Redirects to URLS
