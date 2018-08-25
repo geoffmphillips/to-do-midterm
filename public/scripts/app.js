@@ -6,6 +6,6 @@ $(function() {
     // var li = $(event.target).closest('li.list-group-item');
     // $.post('/todos/:todoId/delete').done(function() {
 
-    });
-  });
+  //   });
+  // });
 });
