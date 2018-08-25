@@ -17,9 +17,10 @@ $(function() {
 
   function createDeleteForm (id) {
     var formOutput = $('<form>')
-      .attr('action', '/todos/:todoId')
+      .attr('id', 'test-delete')
+      .attr('action', `/todos/${id}/delete`)
       .attr('method', 'POST')
-      .attr('name', id);
+      .attr('name', 'id');
 
     var deleteButton = createDeleteButton();
     formOutput.append(deleteButton);
@@ -27,8 +28,9 @@ $(function() {
   }
 
   function createDeleteButton() {
-    var deleteButton = $('<i>')
-    .attr('class','far fa-trash-alt')
+    var deleteButton = $('<input>')
+    .attr('type', 'submit')
+    .attr('class','far fa-trash-alt');
     return deleteButton;
   }
 
@@ -135,10 +137,6 @@ $(function() {
 
     var input = $(this).children("input");
     var todoText = input.serialize();
-
-    /*
-      API LOGIC HERE
-    */
 
     var category = "To Read";
     addToList(category, input.val());

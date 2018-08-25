@@ -99,9 +99,10 @@ app.post("/todos/:todoId", (req, res) => {
   res.redirect("/");
 });
 
-app.delete("/todos/:todoId/delete", (req, res) => {
-  console.log(req.params.id);
-  todosDataHelpers.deleteTodoById(req.body.id, (err, rows) => {
+app.post("/todos/:todoId/delete", (req, res) => {
+  console.log("PARAMS: ", req.params.todoId);
+  console.log("BODY: ", req.body);
+  todosDataHelpers.deleteTodoById(req.params.todoId, (err, rows) => {
     if (err) {
       console.log(err);
     } else {
