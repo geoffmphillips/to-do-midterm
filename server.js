@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
 /* Route for when a user posts a new todo.*/
 app.post("/todos", (req, res) => {
 
-  function idFinder(email){
+  function idFinder(email) {
     knex.select("id").from("users").where({email: `${email}`})
       .then((rows) => {
         return rows[0].id;
@@ -68,12 +68,12 @@ app.post("/todos", (req, res) => {
             res.redirect("/");
           }
         });
-      })
+      });
   }
   idFinder(req.cookies.email)
 });
 
-/* Route to update a todo.*/
+/* Route to update a todo */
 app.put("/todos/todoId", (req, res) => {
   //SQL query to update entire todo record.
   knex('todos').where(`id = ${req.body.todoId}`)
@@ -188,10 +188,10 @@ app.post("/users", (req, res) => {
           console.log("Information updated");
           res.redirect('/users');
         }
-      })
+      });
   }
   userUpdater(req.cookies.email, req.body)
-})
+});
 
 app.post("/logout", (req, res) => {
   res.clearCookie("email")

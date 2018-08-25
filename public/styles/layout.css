@@ -1,0 +1,29 @@
+body {
+  background-color: #EEE;
+}
+
+body .form-container {
+  padding: 1em 0;
+  display: flex;
+  justify-content: center;
+}
+
+body .form-container input {
+  font-size: 1.25rem;
+  width: 35em;
+  height: 4em;
+}
+
+body .card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+body .card-container h1 {
+  height: 100%;
+}
+
+body .card-container #card {
+  padding: 0 0 0 0;
+}
