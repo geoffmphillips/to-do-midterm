@@ -17,8 +17,6 @@ const knexLogger       = require('knex-logger');
 const usersDataHelpers = require('./lib/users-data-helpers.js')(knex);
 const todosDataHelpers = require('./lib/todos-data-helpers.js')(knex);
 
-// const usersRoutes = require("./routes/users");
-
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -47,6 +45,8 @@ app.get("/todos", (req, res) => {
     usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
       if (err) {
         console.log(err);
+      } else if (!rows) {
+        res.redirect("/login");
       } else {
         const userId = rows.id;
         todosDataHelpers.getTodosByUserId(userId, (err, rows) => {
@@ -68,6 +68,7 @@ app.post("/todos", (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      console.log(rows);
       const todo = todosDataHelpers.createTodoObject(req.body.todo, rows.id)
       todosDataHelpers.saveTodo(todo, (err, rows) => {
         if (err) {
@@ -92,19 +93,17 @@ app.post("/todos/:todoId/delete", (req, res) => {
 
 // Route to update a todo
 app.post("/todos/:todoId/:category", (req, res) => {
-  console.log("REQ PARAMS CATEGORY", req.params.category)
-  knex('todos').where({id: req.params.todoId})
-    .update({
-    category: req.params.category
-  }).asCallback(function(err, rows) {
-      if(err) {
-        console.log("error", err)
-      } else {
-        console.log("NICE");
-      }
+  const todo = {
+    id: req.params.todoId,
+    category: req.params.category,
+  }
+  todosDataHelpers.updateTodoById(todo, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/");
+    }
   });
-
-  res.redirect("/");
 });
 
 
@@ -113,29 +112,20 @@ app.get("/login", (req, res) => {
 });
 
 /* Post route for Login. Lets anyone log in, no checks. */
-/* THIS FUNCTION WORKS BUT IT IS VERY BAD PLZ REFACTOR */
 app.post("/login", (req, res) => {
-  let userEmail = req.body.email;
-
-  function emailChecker (email){
-    knex.select("email").from("users").where({email: `${email}`})
-    .asCallback(function(err, rows){
-      if(err){
-        console.log("error", err);
-        res.redirect("/register");
-      } else if (!rows[0]) {
-        res.redirect('/register');
-      } else  {
-        res.cookie("email", email);
-        res.redirect('/');
-      }
-    });
-  }
-  emailChecker(req.body.email);
+  usersDataHelpers.getUserByEmail(req.body.email, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else if (!rows) {
+      res.render("login");
+    } else {
+      res.cookie("email", req.body.email);
+      res.redirect('/');
+    }
+  });
 });
 
-/* Route that gets the register page
-   If user has a cookie, redirects to todos*/
+// Route that gets the register page If user has a cookie, redirects to todos
 app.get("/register", (req, res) => {
   if (req.cookies.email){
     res.redirect("/")
@@ -156,20 +146,29 @@ app.post("/register", (req, res) => {
 app.get("/users", (req, res) => {
   if(!req.cookies.email){
     res.redirect("/login")
+  } else {
+    usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(rows);
+        res.render('users', rows[0]);
+      }
+    });
   }
-  let templateVars;
-    function getTemplateVars(email){
-      knex.select().from('users').where({email: `${email}`})
-      .asCallback(function(err, rows){
-        if(err){
-          console.log("error", err);
-        } else {
-          templateVars = rows[0];
-          res.render('users', templateVars);
-        }
-      })
-    }
-  getTemplateVars(req.cookies.email)
+  // let templateVars;
+  //   function getTemplateVars(email){
+  //     knex.select().from('users').where({email: `${email}`})
+  //     .asCallback(function(err, rows){
+  //       if(err){
+  //         console.log("error", err);
+  //       } else {
+  //         templateVars = rows[0];
+  //         res.render('users', templateVars);
+  //       }
+  //     })
+  //   }
+  // getTemplateVars(req.cookies.email)
 });
 
 app.post("/users", (req, res) => {
