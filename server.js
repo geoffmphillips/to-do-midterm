@@ -32,12 +32,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-// Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
-
 /* ROUTES BELOW */
 
-// Get the Todos page.
 app.get("/", (req, res) => {
   if(!req.cookies.email){
     res.redirect("/login")
@@ -67,7 +63,6 @@ app.get("/todos", (req, res) => {
   }
 });
 
-// Route for when a user posts a new todo
 app.post("/todos", (req, res) => {
   usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
     if (err) {
@@ -85,15 +80,14 @@ app.post("/todos", (req, res) => {
   });
 });
 
-// Route to update a todo
 app.post("/todos/:todoId", (req, res) => {
-  //SQL query to update entire todo record.
-  knex('todos').where({id: req.params.todoId})
-    .update({
-    category: category,
+  todosDataHelpers.updateTodoById(req.params.todoId, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/");
+    }
   });
-
-  res.redirect("/");
 });
 
 app.post("/todos/:todoId/delete", (req, res) => {
@@ -106,10 +100,7 @@ app.post("/todos/:todoId/delete", (req, res) => {
   });
 });
 
-/* GET route for login page. Redirects to URLS
-   if the user is already logged in */
 app.get("/login", (req, res) => {
-
   res.render("login");
 });
 
@@ -123,19 +114,16 @@ app.post("/login", (req, res) => {
     .asCallback(function(err, rows){
       if(err){
         console.log("error", err);
-        console.log("user not recognized");
         res.redirect("/register");
       } else if (!rows[0]) {
-        console.log("user not recognized");
         res.redirect('/register');
       } else  {
-        console.log("user recognized");
-        res.cookie("email", userEmail);
+        res.cookie("email", email);
         res.redirect('/');
       }
     });
   }
-  emailChecker(userEmail);
+  emailChecker(req.body.email);
 });
 
 /* Route that gets the register page
