@@ -1,25 +1,23 @@
 $(function() {
   function createDropdownForm(id) {
-    var formOutput = $('<form>')
-      .attr('name', id)
+    var output = $('<form>')
       .attr('class', 'dropdown')
       .attr('method', 'POST')
-      .attr('action', 'todos');
+      .attr('action', '/todos/' + id);
 
     // The dropdownButton is the button itself while the divDropdown is the container for the buttons that will drop down on click
     var dropdownButton = createDropdownButton();
     var divDropdown = createDivDropdown();
 
-    formOutput.append(dropdownButton);
-    formOutput.append(divDropdown);
-    return formOutput;
+    output.append(dropdownButton);
+    output.append(divDropdown);
+    return output;
   }
 
   function createDeleteForm (id) {
     var formOutput = $('<form>')
-      .attr('action', '/todos/:todoId')
-      .attr('method', 'POST')
-      .attr('name', id);
+      .attr('action', '/todos/' + id +'/delete')
+      .attr('method', 'POST');
 
     var deleteButton = createDeleteButton();
     formOutput.append(deleteButton);
@@ -27,13 +25,24 @@ $(function() {
   }
 
   function createDeleteButton() {
-    var deleteButton = $('<i>')
-    .attr('class','far fa-trash-alt')
-    return deleteButton;
+    var output = $('<button>')
+      .attr('type', 'submit')
+      .attr('class','btn btn-secondary');
+
+    var trashIcon = createTrashIcon();
+
+    output.append(trashIcon);
+    return output;
+  }
+
+  function createTrashIcon() {
+    var output = $('<i>')
+      .attr('class', 'far fa-trash-alt');
+    return output;
   }
 
   function createDropdownButton() {
-    var dropdownButtonOutput = $('<button>')
+    var output = $('<button>')
       .attr('id', 'dropdownMenuButton')
       .attr('class', 'btn btn-secondary dropdown-toggle')
       .attr('type', 'button')
@@ -43,18 +52,18 @@ $(function() {
 
     var editIcon = createEditIcon()
 
-    dropdownButtonOutput.append(editIcon);
-    return dropdownButtonOutput;
+    output.append(editIcon);
+    return output;
   }
 
   function createEditIcon() {
-    var iconOutput =$('<i>')
+    var output =$('<i>')
       .attr('class', 'far fa-edit');
-    return iconOutput;
+    return output;
   }
 
   function createDivDropdown() {
-    var dropdownDivOutput = $('<div>')
+    var output = $('<div>')
       .attr('class', 'dropdown-menu')
       .attr('aria-labelledby', 'dropdownMenuButton');
 
@@ -63,34 +72,34 @@ $(function() {
     var buttonToRead = createSubmitButton("Read");
     var buttonToBuy = createSubmitButton("Buy");
 
-    dropdownDivOutput.append(buttonToEat);
-    dropdownDivOutput.append(buttonToWatch);
-    dropdownDivOutput.append(buttonToRead);
-    dropdownDivOutput.append(buttonToBuy);
+    output.append(buttonToEat);
+    output.append(buttonToWatch);
+    output.append(buttonToRead);
+    output.append(buttonToBuy);
 
-    return dropdownDivOutput;
+    return output;
   }
 
   function createSubmitButton(category) {
-    var submitButtonOutput = $('<button>')
+    var output = $('<button>')
       .attr('class', 'dropdown-item')
       .attr('type', 'submit')
-      .attr('name', category)
+      .attr('name', 'category')
       .text("To " + category);
-    return submitButtonOutput;
+    return output;
   }
 
   function createListElement(content, id) {
-    var listElementOutput = $("<li>");
-    listElementOutput.attr('class', 'list-group-item')
+    var output = $("<li>");
+    output.attr('class', 'list-group-item')
       .append($('<p>').text(content));
 
     var newEditForm = createDropdownForm(id);
     var newDeleteForm = createDeleteForm(id);
-    listElementOutput.append(newEditForm);
-    listElementOutput.append(newDeleteForm);
+    output.append(newEditForm);
+    output.append(newDeleteForm);
 
-    return listElementOutput;
+    return output;
   }
 
   function addToList(todoList, todoContent, todoId) {
@@ -136,14 +145,10 @@ $(function() {
     var input = $(this).children("input");
     var todoText = input.serialize();
 
-    /*
-      API LOGIC HERE
-    */
-
-    var category = "To Read";
-    addToList(category, input.val());
+    var category = "To Watch";
 
     $.post('/todos', todoText).done(function(lists) {
+      addToList(category, input.val());
       input.val("");
 
     });

@@ -88,20 +88,16 @@ app.post("/todos", (req, res) => {
 // Route to update a todo
 app.post("/todos/:todoId", (req, res) => {
   //SQL query to update entire todo record.
-  knex('todos').where(`id = ${req.body.todoId}`)
+  knex('todos').where({id: req.params.todoId})
     .update({
-    id: req.body.todoId,
-    name: req.body.name,
-    is_complete: req.body.is_complete,
-    user_id: req.session.email
+    category: category,
   });
 
   res.redirect("/");
 });
 
-app.delete("/todos/:todoId/delete", (req, res) => {
-  console.log(req.params.id);
-  todosDataHelpers.deleteTodoById(req.body.id, (err, rows) => {
+app.post("/todos/:todoId/delete", (req, res) => {
+  todosDataHelpers.deleteTodoById(req.params.todoId, (err, rows) => {
     if (err) {
       console.log(err);
     } else {
