@@ -80,6 +80,15 @@ app.post("/todos", (req, res) => {
   });
 });
 
+app.post("/todos/:todoId/delete", (req, res) => {
+  todosDataHelpers.deleteTodoById(req.params.todoId, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/");
+    }
+  });
+});
 
 // Route to update a todo
 app.post("/todos/:todoId/:category", (req, res) => {
@@ -93,20 +102,11 @@ app.post("/todos/:todoId/:category", (req, res) => {
       } else {
         console.log("NICE");
       }
-  })  ;
+  });
 
   res.redirect("/");
 });
 
-app.post("/todos/:todoId/delete", (req, res) => {
-  todosDataHelpers.deleteTodoById(req.params.todoId, (err, rows) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/");
-    }
-  });
-});
 
 app.get("/login", (req, res) => {
   res.render("login");
