@@ -85,13 +85,20 @@ app.post("/todos", (req, res) => {
   });
 });
 
+
 // Route to update a todo
-app.post("/todos/:todoId", (req, res) => {
-  //SQL query to update entire todo record.
+app.post("/todos/:todoId/:category", (req, res) => {
+  console.log("REQ PARAMS CATEGORY", req.params.category)
   knex('todos').where({id: req.params.todoId})
     .update({
-    category: category,
-  });
+    category: req.params.category
+  }).asCallback(function(err, rows) {
+      if(err) {
+        console.log("error", err)
+      } else {
+        console.log("NICE");
+      }
+  })  ;
 
   res.redirect("/");
 });
