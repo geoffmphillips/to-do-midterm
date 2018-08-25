@@ -1,12 +1,15 @@
 $(function() {
 
 
-  // Event delegation example. Needs to be replaced with delete/complete code
-  $('ul.list-group').on('click', 'li', function(event) {
-    var li = $(event.target);
-    li.remove();
-    $.ajax('todos').done(function() {
+  // Event delegation
+  // $('form#test-delete').on('click', 'input', function(event) {
+    // var li = $(event.target).closest('li.list-group-item');
+    // $.post('/todos/:todoId/delete').done(function() {
 
-    });
-  });
+  //   });
+  // });
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> master
