@@ -10,14 +10,13 @@
     </header>
   </div>
   <body>
-    <h1>Register</h1>
+    <h1>Profile</h1>
     <form action="/users" method="POST">
-      <img src="" alt="avatar" name="avatar">
       <p><%= email %></p>
-      <input type="text" name="name" class="form-control" value="<%= name %>"></input>
-      <input type="text" name="password" class="form-control" value="<%= password %>"></input>
-      <input type="text" name="favorite_food" class="form-control" value="<%= favorite_food %>"></input>
-      <input type="text" name="description" class="form-control" value="<%= description %>"></input>
+      <input type="text" name="name" class="form-control" value="<%= name %>"/>
+      <input type="text" name="password" class="form-control" value="<%= password %>"/>
+      <input type="text" name="favorite_food" class="form-control" value="<%= favorite_food %>"/>
+      <input type="text" name="description" class="form-control" value="<%= description %>"/>
       <button type="submit" name="update-user" class="btn btn-dark">Register</button>
     </form>
   </body>
