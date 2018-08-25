@@ -188,10 +188,10 @@ app.post("/users", (req, res) => {
           console.log("Information updated");
           res.redirect('/users');
         }
-      })
+      });
   }
   userUpdater(req.cookies.email, req.body)
-})
+});
 
 app.post("/logout", (req, res) => {
   res.clearCookie("email")
