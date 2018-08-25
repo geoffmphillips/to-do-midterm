@@ -2,19 +2,21 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const app         = express();
-const cookieParser= require("cookie-parser")
+const PORT             = process.env.PORT || 8080;
+const ENV              = process.env.ENV || "development";
+const express          = require("express");
+const bodyParser       = require("body-parser");
+const app              = express();
+const cookieParser     = require("cookie-parser")
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
+const knexConfig       = require("./knexfile");
+const knex             = require("knex")(knexConfig[ENV]);
+const morgan           = require('morgan');
+const knexLogger       = require('knex-logger');
 
-// Seperated Routes for each Resource
+const usersDataHelpers = require('./lib/users-data-helpers.js')(knex);
+const todosDataHelpers = require('./lib/todos-data-helpers.js')(knex);
+
 // const usersRoutes = require("./routes/users");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -44,19 +46,40 @@ app.get("/", (req, res) => {
   }
 });
 
+app.get("/todos", (req, res) => {
+  if(req.cookies.email) {
+    usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const userId = rows.id;
+        todosDataHelpers.getTodosByUserId(userId, (err, rows) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.json(rows);
+          }
+        });
+      }
+  });
+  } else {
+    res.redirect("/login");
+  }
+});
+
 /* Route for when a user posts a new todo.*/
 app.post("/todos", (req, res) => {
 
   function idFinder(email) {
     knex.select("id").from("users").where({email: `${email}`})
-      .then((rows) => {
-        return rows[0].id;
-      }).then((id) => {
+     .then((rows) => { return rows[0].id; })
+     .then((id) => {
+       console.log(id);
         knex('todos').insert(
           {name: req.body.todo,
           is_complete: false,
           user_id: id,
-          category: "movie"
+          category: "To Watch"
         }).catch((err) => {
           console.log("error", err);
         })
@@ -70,7 +93,6 @@ app.post("/todos", (req, res) => {
         });
       });
   }
-  idFinder(req.cookies.email)
 });
 
 /* Route to update a todo */
@@ -100,7 +122,7 @@ app.delete("/todos/todoId", (req, res) => {
 app.get("/login", (req, res) => {
 
   res.render("login");
-})
+});
 
 /* Post route for Login. Lets anyone log in, no checks. */
 /* THIS FUNCTION WORKS BUT IT IS VERY BAD PLZ REFACTOR */
@@ -122,10 +144,10 @@ app.post("/login", (req, res) => {
         res.cookie("email", userEmail);
         res.redirect('/');
       }
-    })
+    });
   }
   emailChecker(userEmail);
-})
+});
 
 /* Route that gets the register page
    If user has a cookie, redirects to todos*/
@@ -134,23 +156,17 @@ app.get("/register", (req, res) => {
     res.redirect("/")
   }
   res.render("register")
-})
+});
 
-/* Post route for when someone registers.
-   Front end will handle errors. If the
-   request makes it to here, add to DB. */
 app.post("/register", (req, res) => {
-  knex('users').insert(
-    {email: req.body.email,
-    password: req.body.password,
-  }).asCallback(function(err, rows){
+  usersDataHelpers.saveUser(req.body, function(err, rows) {
     if(err){
       console.log("error", err);
     } else {
       res.redirect('/login');
     }
-  })
-})
+  });
+});
 
 app.get("/users", (req, res) => {
   if(!req.cookies.email){
@@ -169,7 +185,7 @@ app.get("/users", (req, res) => {
       })
     }
   getTemplateVars(req.cookies.email)
-})
+});
 
 app.post("/users", (req, res) => {
 
@@ -196,7 +212,7 @@ app.post("/users", (req, res) => {
 app.post("/logout", (req, res) => {
   res.clearCookie("email")
   res.redirect("/");
-})
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
