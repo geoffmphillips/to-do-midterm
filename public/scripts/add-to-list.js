@@ -94,7 +94,6 @@ $(function() {
       }
   }
 
-
   $("form#new-list-item").on("submit", function(event) {
     event.preventDefault();
 
