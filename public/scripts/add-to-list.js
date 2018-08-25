@@ -3,11 +3,11 @@ $(function() {
     var output = $('<form>')
       .attr('class', 'dropdown')
       .attr('method', 'POST')
-      .attr('action', '/todos/' + id);
+      // .attr('action', '/todos/' + id);
 
     // The dropdownButton is the button itself while the divDropdown is the container for the buttons that will drop down on click
     var dropdownButton = createDropdownButton();
-    var divDropdown = createDivDropdown();
+    var divDropdown = createDivDropdown(id);
 
     output.append(dropdownButton);
     output.append(divDropdown);
@@ -62,15 +62,15 @@ $(function() {
     return output;
   }
 
-  function createDivDropdown() {
+  function createDivDropdown(id) {
     var output = $('<div>')
       .attr('class', 'dropdown-menu')
       .attr('aria-labelledby', 'dropdownMenuButton');
 
-    var buttonToEat = createSubmitButton("Eat");
-    var buttonToWatch = createSubmitButton("Watch");
-    var buttonToRead = createSubmitButton("Read");
-    var buttonToBuy = createSubmitButton("Buy");
+    var buttonToEat = createSubmitButton(id, "To Eat");
+    var buttonToWatch = createSubmitButton(id, "To Watch");
+    var buttonToRead = createSubmitButton(id, "To Read");
+    var buttonToBuy = createSubmitButton(id, "To Buy");
 
     output.append(buttonToEat);
     output.append(buttonToWatch);
@@ -80,12 +80,13 @@ $(function() {
     return output;
   }
 
-  function createSubmitButton(category) {
+  function createSubmitButton(id, category) {
     var output = $('<button>')
       .attr('class', 'dropdown-item')
       .attr('type', 'submit')
       .attr('name', 'category')
-      .text("To " + category);
+      .text(category)
+      .attr('formaction', '/todos/'+ id + '/' + category);
     return output;
   }
 
