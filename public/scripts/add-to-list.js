@@ -1,10 +1,9 @@
 $(function() {
   function createDropdownForm(id) {
     var formOutput = $('<form>')
-      .attr('name', id)
       .attr('class', 'dropdown')
       .attr('method', 'POST')
-      .attr('action', 'todos');
+      .attr('action', '/todos/' + id);
 
     // The dropdownButton is the button itself while the divDropdown is the container for the buttons that will drop down on click
     var dropdownButton = createDropdownButton();
@@ -17,10 +16,8 @@ $(function() {
 
   function createDeleteForm (id) {
     var formOutput = $('<form>')
-      .attr('id', 'test-delete')
       .attr('action', '/todos/' + id +'/delete')
-      .attr('method', 'POST')
-      .attr('name', 'id');
+      .attr('method', 'POST');
 
     var deleteButton = createDeleteButton();
     formOutput.append(deleteButton);
@@ -28,10 +25,20 @@ $(function() {
   }
 
   function createDeleteButton() {
-    var deleteButton = $('<input>')
-    .attr('type', 'submit')
-    .attr('class','far fa-trash-alt');
+    var deleteButton = $('<button>')
+      .attr('type', 'submit')
+      .attr('class','btn btn-secondary');
+
+    var trashIcon = createTrashIcon();
+
+    deleteButton.append(trashIcon);
     return deleteButton;
+  }
+
+  function createTrashIcon() {
+    var output = $('<i>')
+      .attr('class', 'far fa-trash-alt');
+    return output;
   }
 
   function createDropdownButton() {
@@ -77,7 +84,7 @@ $(function() {
     var submitButtonOutput = $('<button>')
       .attr('class', 'dropdown-item')
       .attr('type', 'submit')
-      .attr('name', category)
+      .attr('name', 'category')
       .text("To " + category);
     return submitButtonOutput;
   }
