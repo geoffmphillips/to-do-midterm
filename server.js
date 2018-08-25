@@ -79,7 +79,7 @@ app.post("/todos", (req, res) => {
           {name: req.body.todo,
           is_complete: false,
           user_id: id,
-          category: "To Watch"
+          category: "To Watch",
         }).catch((err) => {
           console.log("error", err);
         })
@@ -93,6 +93,7 @@ app.post("/todos", (req, res) => {
         });
       });
   }
+  idFinder(req.cookies.email);
 });
 
 /* Route to update a todo */

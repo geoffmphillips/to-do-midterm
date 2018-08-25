@@ -1,7 +1,7 @@
 $(function() {
-  function createDropdownForm() {
+  function createDropdownForm(id) {
     var formOutput = $('<form>')
-      // .attr('name', id);
+      .attr('name', id)
       .attr('class', 'dropdown')
       .attr('method', 'POST')
       .attr('action', 'todos');
@@ -63,18 +63,18 @@ $(function() {
     return submitButtonOutput;
   }
 
-  function createListElement(content) {
+  function createListElement(content, id) {
     var listElementOutput = $("<li>");
     listElementOutput.attr('class', 'list-group-item')
       .append($('<p>').text(content));
 
-    var newForm = createDropdownForm();
+    var newForm = createDropdownForm(id);
     listElementOutput.append(newForm);
     return listElementOutput;
   }
 
-  function addToList(todoList, todoContent) {
-    var listElement = createListElement(todoContent);
+  function addToList(todoList, todoContent, todoId) {
+    var listElement = createListElement(todoContent, todoId);
 
     switch (todoList) {
       case "To Eat":
@@ -97,7 +97,7 @@ $(function() {
 
   function renderLists(lists) {
     lists.forEach(function(todo) {
-      addToList(todo.category, todo.name);
+      addToList(todo.category, todo.name, todo.id);
     });
   }
 
@@ -123,8 +123,9 @@ $(function() {
     var category = "To Read";
     addToList(category, input.val());
 
-    $.post('/todos', todoText).done(function() {
+    $.post('/todos', todoText).done(function(lists) {
       input.val("");
+
     });
   });
 });
