@@ -18,7 +18,7 @@ $(function() {
   function createDeleteForm (id) {
     var formOutput = $('<form>')
       .attr('id', 'test-delete')
-      .attr('action', `/todos/${id}/delete`)
+      .attr('action', '/todos/' + id +'/delete')
       .attr('method', 'POST')
       .attr('name', 'id');
 
