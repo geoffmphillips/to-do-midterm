@@ -2,6 +2,16 @@ body {
   background-color: #D6DBF1;
   font-family: "Roboto Slab", serif;
 }
+body #error-message {
+  display: flex;
+  justify-content: center;
+}
+body #error-message p {
+  color: red;
+  width: auto;
+  margin: 0 auto 1em;
+  display: none;
+}
 body div.big-container {
   display: flex;
   width: inherit;

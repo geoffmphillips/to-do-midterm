@@ -2,6 +2,17 @@ body {
   background-color: #D6DBF1;
   font-family: 'Roboto Slab', serif;
 
+  #error-message {
+    display: flex;
+    justify-content: center;
+      p {
+        color: red;
+        width: auto;
+        margin: 0 auto 1em;
+        display: none;
+      }
+  }
+
   div.big-container {
     display: flex;
     width: inherit;
