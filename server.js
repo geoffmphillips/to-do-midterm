@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
   if(!req.cookies.email){
     res.redirect("/login")
   } else {
-    res.render("index");
+    res.render("index", { email: req.cookies.email });
   }
 });
 
@@ -68,7 +68,6 @@ app.post("/todos", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(rows);
       const todo = todosDataHelpers.createTodoObject(req.body.todo, rows.id)
       todosDataHelpers.saveTodo(todo, (err, rows) => {
         if (err) {
@@ -108,7 +107,12 @@ app.post("/todos/:todoId/:category", (req, res) => {
 
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  if (req.cookies.email) {
+    let email = req.cookies.email;
+  } else {
+    let email = "";
+    res.render("login", { email: email });
+  }
 });
 
 /* Post route for Login. Lets anyone log in, no checks. */
@@ -117,7 +121,8 @@ app.post("/login", (req, res) => {
     if (err) {
       console.log(err);
     } else if (!rows) {
-      res.render("login");
+      let email = "";
+      res.render("login", { email: email });
     } else {
       res.cookie("email", req.body.email);
       res.redirect('/');
@@ -129,8 +134,10 @@ app.post("/login", (req, res) => {
 app.get("/register", (req, res) => {
   if (req.cookies.email){
     res.redirect("/")
+  } else {
+    let email = "";
+    res.render("register", { email: email })
   }
-  res.render("register")
 });
 
 app.post("/register", (req, res) => {

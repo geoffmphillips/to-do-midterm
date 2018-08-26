@@ -1,16 +1,63 @@
 body {
-  background-color: #EEE;
+  background-color: #D6DBF1;
+  font-family: 'Roboto Slab', serif;
+
+  div.big-container {
+    display: flex;
+    width: inherit;
+    flex-direction: column;
+    padding: 7em 0 0 0;
+
+      h3 {
+        width: auto;
+        margin: auto auto 0.5em;
+
+      }
+
+      p {
+        width: auto;
+        margin: auto auto 1.2em;
+      }
+
+      div.input-form-container {
+        h3 {
+          width: auto;
+          margin: auto auto 0.5em;
+
+        }
+
+        p {
+          width: auto;
+          margin: auto auto 1.2em;
+        }
+      }
+
+      div.card {
+        margin: auto;
+      }
+  }
+
+  #spacer {
+    padding: 2.9em;
+  }
+
 
   .form-container {
     padding: 1em 0;
     display: flex;
     justify-content: center;
+
     input {
       font-size: 1.25rem;
       width: 35em;
       height: 4em;
     }
   }
+
+  .input-form-container {
+    justify-content: center;
+  }
+
   .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -22,6 +69,15 @@ body {
 
     #card {
       padding: 0 0 0 0;
+
+      div {
+        padding: 0;
+
+        li.list-group-item {
+          display: flex;
+          align-items: center;
+        }
+      }
     }
   }
 }
