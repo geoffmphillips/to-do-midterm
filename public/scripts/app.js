@@ -101,7 +101,7 @@ $(function() {
       var category = $(this).attr("data-category")
       var formattedCat = category.replace(" ", "-").toLowerCase()
 
-      $(this).closest('li').appendTo('#' + 'formattedCat')
+      $(this).closest('li').appendTo('#' + formattedCat)
 
       $.post('/todos/' + id + '/' + category).done(function(){});
     })
@@ -182,6 +182,6 @@ $(function() {
         $("#error-message-text").slideUp(400);
       })
     }
-    
+
   });
 });
