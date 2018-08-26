@@ -121,7 +121,7 @@ app.post("/login", (req, res) => {
     if (err) {
       console.log(err);
     } else if (!rows) {
-      let email = "hello";
+      let email = "";
       res.render("login", { email: email });
     } else {
       res.cookie("email", req.body.email);
