@@ -69,7 +69,7 @@ app.post("/todos", (req, res) => {
       console.log(err);
     } else {
       let extendedTodo = todosDataHelpers.multiplyWords(req.body.todo);
-      const todoObject = todosDataHelpers.createTodoObject(extendedTodo, rows.id, req.body.name);
+      const todoObject = todosDataHelpers.createTodoObject(extendedTodo, rows.id, req.body.todo);
       todosDataHelpers.saveTodo(todoObject, (err, rows) => {
         if (err) {
           console.log(err);
