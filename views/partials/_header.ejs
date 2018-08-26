@@ -3,18 +3,23 @@
     <header class="blog-header py-3">
       <div class="row flex-nowrap justify-content-between align-items-center">
         <div class="col-4 pt-1">
-          <a class="text-muted" href="users">Profile</a>
+          <a style="text-decoration: none; color: inherit" href="users">Profile</a>
         </div>
         <div class="col-4 text-center">
-          <h1 class="blog-header-logo text-dark">todo</h1>
+          <a style="text-decoration: none" href="/">
+            <h1 class="blog-header-logo text-dark">todo</h1>
+          </a>
         </div>
         <div class="col-4 d-flex justify-content-end align-items-center">
+          <% if (!email) { %>
           <form action="login" method="GET">
-            <a href="login" class="btn btn-sm btn-outline-secondary">login</a>
+            <a href="login" class="btn btn-sm btn-secondary">Login</a>
           </form>
+          <% } else {%>
           <form action="logout" method="POST">
-            <button type="submit" name="logout" class="btn btn-sm btn-outline-secondary">logout</button>
+            <button type="submit" name="logout" class="btn btn-sm btn-outline-secondary">Logout</button>
           </form>
+          <% } %>
         </div>
       </div>
     </header>

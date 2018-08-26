@@ -1,6 +1,31 @@
 body {
-  background-color: #EEE;
+  background-color: #D6DBF1;
   font-family: "Roboto Slab", serif;
+}
+body div.big-container {
+  display: flex;
+  width: inherit;
+  flex-direction: column;
+  padding: 7em 0 0 0;
+}
+body div.big-container h3 {
+  width: auto;
+  margin: auto auto 0.5em;
+}
+body div.big-container p {
+  width: auto;
+  margin: auto auto 1.2em;
+}
+body div.big-container div.input-form-container h3 {
+  width: auto;
+  margin: auto auto 0.5em;
+}
+body div.big-container div.input-form-container p {
+  width: auto;
+  margin: auto auto 1.2em;
+}
+body div.big-container div.card {
+  margin: auto;
 }
 body #spacer {
   padding: 2.9em;
@@ -15,6 +40,9 @@ body .form-container input {
   width: 35em;
   height: 4em;
 }
+body .input-form-container {
+  justify-content: center;
+}
 body .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -25,6 +53,13 @@ body .card-container h1 {
 }
 body .card-container #card {
   padding: 0 0 0 0;
+}
+body .card-container #card div {
+  padding: 0;
+}
+body .card-container #card div li.list-group-item {
+  display: flex;
+  align-items: center;
 }
 
 /*# sourceMappingURL=layout.css.map */
