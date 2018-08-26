@@ -16,14 +16,6 @@ body div.big-container p {
   width: auto;
   margin: auto auto 1.2em;
 }
-body div.big-container div.input-form-container h3 {
-  width: auto;
-  margin: auto auto 0.5em;
-}
-body div.big-container div.input-form-container p {
-  width: auto;
-  margin: auto auto 1.2em;
-}
 body div.big-container div.card {
   margin: auto;
 }
@@ -54,12 +46,19 @@ body .card-container h1 {
 body .card-container #card {
   padding: 0 0 0 0;
 }
+body .card-container #card h5 {
+  margin: 0 0 0.6em 0.75em;
+}
 body .card-container #card div {
   padding: 0;
 }
 body .card-container #card div li.list-group-item {
   display: flex;
   align-items: center;
+}
+body .card-container #card div li.list-group-item p {
+  margin: 0;
+  flex-grow: 7;
 }
 
 /*# sourceMappingURL=layout.css.map */
