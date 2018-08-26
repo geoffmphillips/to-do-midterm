@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 
 app.get("/todos", (req, res) => {
   if(req.cookies.email) {
-    usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+    usersDataHelpers.getUserIdByEmail(req.cookies.email, (err, rows) => {
       if (err) {
         console.log(err);
       } else if (!rows) {
@@ -64,7 +64,7 @@ app.get("/todos", (req, res) => {
 });
 
 app.post("/todos", (req, res) => {
-  usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+  usersDataHelpers.getUserIdByEmail(req.cookies.email, (err, rows) => {
     if (err) {
       console.log(err);
     } else {
@@ -113,7 +113,7 @@ app.get("/login", (req, res) => {
 
 /* Post route for Login. Lets anyone log in, no checks. */
 app.post("/login", (req, res) => {
-  usersDataHelpers.getUserByEmail(req.body.email, (err, rows) => {
+  usersDataHelpers.getUserIdByEmail(req.body.email, (err, rows) => {
     if (err) {
       console.log(err);
     } else if (!rows) {
@@ -151,46 +151,20 @@ app.get("/users", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(rows);
         res.render('users', rows[0]);
       }
     });
   }
-  // let templateVars;
-  //   function getTemplateVars(email){
-  //     knex.select().from('users').where({email: `${email}`})
-  //     .asCallback(function(err, rows){
-  //       if(err){
-  //         console.log("error", err);
-  //       } else {
-  //         templateVars = rows[0];
-  //         res.render('users', templateVars);
-  //       }
-  //     })
-  //   }
-  // getTemplateVars(req.cookies.email)
 });
 
 app.post("/users", (req, res) => {
-
-  function userUpdater (email, params) {
-      knex('users').where({email: `${email}`})
-        .update({
-        avatar: params.avatar,
-        name: params.name,
-        password: params.password,
-        favorite_food: params.favorite_food,
-        description: params.description
-      }).asCallback(function(err, rows){
-        if(err){
-          console.log("error", err);
-        } else {
-          console.log("Information updated");
-          res.redirect('/users');
-        }
-      });
-  }
-  userUpdater(req.cookies.email, req.body)
+  usersDataHelpers.updateUserByEmail(req.cookies.email, req.body, (err, rows) => {
+    if (err) {
+      console.log (err);
+    } else {
+      res.redirect('/users');
+    }
+  });
 });
 
 app.post("/logout", (req, res) => {
