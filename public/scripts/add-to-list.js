@@ -3,7 +3,6 @@ $(function() {
     var output = $('<form>')
       .attr('class', 'dropdown')
       .attr('method', 'POST')
-      // .attr('action', '/todos/' + id);
 
     // The dropdownButton is the button itself while the divDropdown is the container for the buttons that will drop down on click
     var dropdownButton = createDropdownButton();
@@ -14,20 +13,29 @@ $(function() {
     return output;
   }
 
-  function createDeleteForm (id) {
-    var formOutput = $('<form>')
-      .attr('action', '/todos/' + id +'/delete')
-      .attr('method', 'POST');
+  function createDeleteDiv (id, target) {
+    var divOutput = $('<div>')
+
+      divOutput.on("click", function(event) {
+        event.preventDefault();
+        console.log("front end TODO ID: ", id);
+
+        $.post(`/todos/${id}/delete`).done(function() {
+          console.log("JQUERY Delete route fired");
+        });
+        target.remove();
+      })
 
     var deleteButton = createDeleteButton();
-    formOutput.append(deleteButton);
-    return formOutput;
+
+    divOutput.append(deleteButton);
+    return divOutput;
   }
 
   function createDeleteButton() {
     var output = $('<button>')
       .attr('type', 'submit')
-      .attr('class','btn btn-secondary');
+      .attr('class','btn btn-secondary delete')
 
     var trashIcon = createTrashIcon();
 
@@ -86,7 +94,8 @@ $(function() {
       .attr('type', 'submit')
       .attr('name', 'category')
       .text(category)
-      .attr('formaction', '/todos/'+ id + '/' + category);
+      .attr('formaction', '/todos/'+ id + '/' + category)
+      .attr("data-category", category)
     return output;
   }
 
@@ -96,9 +105,9 @@ $(function() {
       .append($('<p>').text(content));
 
     var newEditForm = createDropdownForm(id);
-    var newDeleteForm = createDeleteForm(id);
+    var newDeleteDiv = createDeleteDiv(id, output);
     output.append(newEditForm);
-    output.append(newDeleteForm);
+    output.append(newDeleteDiv);
 
     return output;
   }
@@ -123,6 +132,15 @@ $(function() {
         $('#uncategorized').append(listElement);
         break;
       }
+
+      $("button.dropdown-item").on("click", function(event) {
+        event.preventDefault();
+        var category = $(this).attr("data-category")
+        var formattedCat = category.replace(" ", "-").toLowerCase()
+
+        $(this).closest('li').appendTo(`#${formattedCat}`)
+
+      })
   }
 
   function renderLists(lists) {
