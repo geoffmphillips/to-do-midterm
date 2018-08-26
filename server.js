@@ -17,8 +17,6 @@ const knexLogger       = require('knex-logger');
 const usersDataHelpers = require('./lib/users-data-helpers.js')(knex);
 const todosDataHelpers = require('./lib/todos-data-helpers.js')(knex);
 
-// const usersRoutes = require("./routes/users");
-
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -32,12 +30,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-// Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
-
 /* ROUTES BELOW */
 
-// Get the Todos page.
 app.get("/", (req, res) => {
   if(!req.cookies.email){
     res.redirect("/login")
@@ -48,9 +42,11 @@ app.get("/", (req, res) => {
 
 app.get("/todos", (req, res) => {
   if(req.cookies.email) {
-    usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+    usersDataHelpers.getUserIdByEmail(req.cookies.email, (err, rows) => {
       if (err) {
         console.log(err);
+      } else if (!rows) {
+        res.redirect("/login");
       } else {
         const userId = rows.id;
         todosDataHelpers.getTodosByUserId(userId, (err, rows) => {
@@ -67,12 +63,12 @@ app.get("/todos", (req, res) => {
   }
 });
 
-// Route for when a user posts a new todo
 app.post("/todos", (req, res) => {
-  usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+  usersDataHelpers.getUserIdByEmail(req.cookies.email, (err, rows) => {
     if (err) {
       console.log(err);
     } else {
+      console.log(rows);
       const todo = todosDataHelpers.createTodoObject(req.body.todo, rows.id)
       todosDataHelpers.saveTodo(todo, (err, rows) => {
         if (err) {
@@ -85,24 +81,6 @@ app.post("/todos", (req, res) => {
   });
 });
 
-
-// Route to update a todo
-app.post("/todos/:todoId/:category", (req, res) => {
-  console.log("REQ PARAMS CATEGORY", req.params.category)
-  knex('todos').where({id: req.params.todoId})
-    .update({
-    category: req.params.category
-  }).asCallback(function(err, rows) {
-      if(err) {
-        console.log("error", err)
-      } else {
-        console.log("NICE");
-      }
-  })  ;
-
-  res.redirect("/");
-});
-
 app.post("/todos/:todoId/delete", (req, res) => {
   todosDataHelpers.deleteTodoById(req.params.todoId, (err, rows) => {
     if (err) {
@@ -113,36 +91,41 @@ app.post("/todos/:todoId/delete", (req, res) => {
   });
 });
 
-/* GET route for login page. Redirects to URLS
-   if the user is already logged in */
-app.get("/login", (req, res) => {
+// Route to update a todo
+app.post("/todos/:todoId/:category", (req, res) => {
+  const todo = {
+    id: req.params.todoId,
+    category: req.params.category,
+  }
+  todosDataHelpers.updateTodoById(todo, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/");
+    }
+  });
+});
 
+
+app.get("/login", (req, res) => {
   res.render("login");
 });
 
 /* Post route for Login. Lets anyone log in, no checks. */
-/* THIS FUNCTION WORKS BUT IT IS VERY BAD PLZ REFACTOR */
 app.post("/login", (req, res) => {
-  let userEmail = req.body.email;
-
-  function emailChecker (email){
-    knex.select("email").from("users").where({email: `${email}`})
-    .asCallback(function(err, rows){
-      if(err){
-        return (`Error: ${err}`);
-      } else if (!rows[0]) {
-        alert('Email incorrect, please enter a valid email!')
-      } else  {
-        res.cookie("email", userEmail);
-        res.redirect('/');
-      }
-    });
-  }
-  emailChecker(userEmail);
+  usersDataHelpers.getUserIdByEmail(req.body.email, (err, rows) => {
+    if (err) {
+      console.log(err);
+    } else if (!rows) {
+      res.render("login");
+    } else {
+      res.cookie("email", req.body.email);
+      res.redirect('/');
+    }
+  });
 });
 
-/* Route that gets the register page
-   If user has a cookie, redirects to todos*/
+// Route that gets the register page If user has a cookie, redirects to todos
 app.get("/register", (req, res) => {
   if (req.cookies.email){
     res.redirect("/")
@@ -163,42 +146,25 @@ app.post("/register", (req, res) => {
 app.get("/users", (req, res) => {
   if(!req.cookies.email){
     res.redirect("/login")
+  } else {
+    usersDataHelpers.getUserByEmail(req.cookies.email, (err, rows) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render('users', rows[0]);
+      }
+    });
   }
-  let templateVars;
-    function getTemplateVars(email){
-      knex.select().from('users').where({email: `${email}`})
-      .asCallback(function(err, rows){
-        if(err){
-          console.log("error", err);
-        } else {
-          templateVars = rows[0];
-          res.render('users', templateVars);
-        }
-      })
-    }
-  getTemplateVars(req.cookies.email)
 });
 
 app.post("/users", (req, res) => {
-
-  function userUpdater (email, params) {
-      knex('users').where({email: `${email}`})
-        .update({
-        avatar: params.avatar,
-        name: params.name,
-        password: params.password,
-        favorite_food: params.favorite_food,
-        description: params.description
-      }).asCallback(function(err, rows){
-        if(err){
-          console.log("error", err);
-        } else {
-          console.log("Information updated");
-          res.redirect('/users');
-        }
-      });
-  }
-  userUpdater(req.cookies.email, req.body)
+  usersDataHelpers.updateUserByEmail(req.cookies.email, req.body, (err, rows) => {
+    if (err) {
+      console.log (err);
+    } else {
+      res.redirect('/users');
+    }
+  });
 });
 
 app.post("/logout", (req, res) => {

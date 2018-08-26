@@ -12,6 +12,7 @@
   <body>
     <h1>Profile</h1>
     <form action="/users" method="POST">
+      <input type="text" name="avatar" class="form-control" value="<%= avatar %>"/>
       <p><%= email %></p>
       <input type="text" name="name" class="form-control" value="<%= name %>"/>
       <input type="text" name="password" class="form-control" value="<%= password %>"/>
