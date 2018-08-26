@@ -8,8 +8,9 @@ $(function() {
 
   //   });
   // });
-<<<<<<< HEAD
+
+  // Load todos from server
+  // Render todo in relevant category
+  // 
+  
 });
-=======
-});
->>>>>>> master

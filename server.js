@@ -17,6 +17,9 @@ const knexLogger       = require('knex-logger');
 const usersDataHelpers = require('./lib/users-data-helpers.js')(knex);
 const todosDataHelpers = require('./lib/todos-data-helpers.js')(knex);
 
+// Require google API function
+// const google_api = require('./google_api');
+
 // const usersRoutes = require("./routes/users");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
