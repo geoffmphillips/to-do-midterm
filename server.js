@@ -68,7 +68,6 @@ app.post("/todos", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(rows);
       const todo = todosDataHelpers.createTodoObject(req.body.todo, rows.id)
       todosDataHelpers.saveTodo(todo, (err, rows) => {
         if (err) {

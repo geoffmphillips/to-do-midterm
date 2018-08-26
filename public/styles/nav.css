@@ -1,0 +1,10 @@
+.navbar-fixed-top {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  background-color: #EEE;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+  font-family: "Roboto Slab", serif;
+}
+
+/*# sourceMappingURL=nav.css.map */

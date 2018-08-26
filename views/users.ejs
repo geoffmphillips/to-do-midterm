@@ -10,15 +10,36 @@
     </header>
   </div>
   <body>
-    <h1>Profile</h1>
-    <form action="/users" method="POST">
-      <input type="text" name="avatar" class="form-control" value="<%= avatar %>"/>
-      <p><%= email %></p>
-      <input type="text" name="name" class="form-control" value="<%= name %>"/>
-      <input type="text" name="password" class="form-control" value="<%= password %>"/>
-      <input type="text" name="favorite_food" class="form-control" value="<%= favorite_food %>"/>
-      <input type="text" name="description" class="form-control" value="<%= description %>"/>
-      <button type="submit" name="update-user" class="btn btn-dark">Register</button>
-    </form>
+    <div class="container">
+      <h3>Hi, <%= name %>! <small>This is your profile page</small></h3>
+      <%= email %>
+      <div class="card" style="width: 30rem; background-color: #EEE;">
+        <div class="card-body">
+          <form action="/users" method="POST">
+            <div class="form-group">
+              <label for="avatar">Avatar URL</label>
+              <input type="text" name="avatar" class="form-control" value="<%= avatar %>">
+            </div>
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" name="name" class="form-control" value="<%= name %>">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="text" name="password" class="form-control" value="<%= password %>">
+            </div>
+            <div class="form-group">
+              <label for="favorite_food">Favorite Food</label>
+              <input type="text" name="favorite_food" class="form-control" value="<%= favorite_food %>">
+            </div>
+            <div class="form-group">
+              <label for="description">Tell us about yourself</label>
+              <input type="text" name="description" class="form-control" value="<%= description %>">
+            </div>
+            <button type="submit" name="update-user" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

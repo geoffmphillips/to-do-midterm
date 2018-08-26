@@ -6,40 +6,41 @@
   </head>
     <% include ./partials/_header %>
   <body>
+    <div id="spacer"></div>
     <form id="new-list-item" class="form-container" action="/todos" method="post">
       <input name="todo" type="text" class="form-control" placeholder="What do you want to do"></input>
       <button type="submit" class="btn btn-secondary" name="create-todo">Submit</button>
     </form>
     <div class="card-container">
-      <div id="card" class="card p-3 mb-2 bg-primary text-white" style="width: 18rem;">
+      <div id="card" class="card p-3 mb-2 text-dark" style="width: 18rem; background-color: #DCD6F7">
         <h5 class="card-title">Food <em>to eat</em></h5>
         <div class="card-body text-dark">
           <ul id="to-eat" class="list-group">
           </ul>
         </div>
       </div>
-      <div id="card" class="card p-3 mb-2 bg-success text-white"  style="width: 18rem;">
+      <div id="card" class="card p-3 mb-2 text-white"  style="width: 18rem; background-color: #A6B1E1">
         <h5 class="card-title">Movies <em>to watch</em></h5>
         <div class="card-body text-dark">
           <ul id="to-watch" class="list-group">
           </ul>
         </div>
       </div>
-      <div id="card" class="card p-3 mb-2 bg-danger text-white"  style="width: 18rem;">
+      <div id="card" class="card p-3 mb-2 text-white"  style="width: 18rem; background-color: #B4869F">
         <h5 class="card-title">Books <em>to read</em></h5>
         <div class="card-body text-dark">
           <ul id="to-read" class="list-group">
           </ul>
         </div>
       </div>
-      <div id="card" class="card p-3 mb-2 bg-warning text-dark"  style="width: 18rem;">
+      <div id="card" class="card p-3 mb-2 text-white"  style="width: 18rem; background-color: #985F6F">
         <h5 class="card-title">Products <em>to buy</em></h5>
-        <div class="card-body">
+        <div class="card-body text-dark">
           <ul id="to-buy" class="list-group">
           </ul>
         </div>
       </div>
-      <div class="card p-3 mb-2 bg-dark text-white"  style="width: 18rem;">
+      <div id="card" class="card p-3 mb-2 text-white"  style="width: 18rem; background-color: #4E4C67">
         <h5 class="card-title">Sorry we couldn't categorize these todos</em></h5>
         <div class="card-body text-dark">
           <ul id="uncategorized" class="list-group">
