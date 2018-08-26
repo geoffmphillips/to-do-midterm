@@ -16,13 +16,12 @@ $(function() {
   function createDeleteDiv (id, target) {
     var divOutput = $('<div>')
 
+      //creates a unique event listener for every new div that gets made.
+      //event listener deletes a specific li that was made earlier.
       divOutput.on("click", function(event) {
         event.preventDefault();
-        console.log("front end TODO ID: ", id);
 
-        $.post(`/todos/${id}/delete`).done(function() {
-          console.log("JQUERY Delete route fired");
-        });
+        $.post(`/todos/${id}/delete`).done(function(){});
         target.remove();
       })
 
@@ -96,6 +95,18 @@ $(function() {
       .text(category)
       .attr('formaction', '/todos/'+ id + '/' + category)
       .attr("data-category", category)
+
+    output.on("click", function(event) {
+      event.preventDefault();
+      var category = $(this).attr("data-category")
+      var formattedCat = category.replace(" ", "-").toLowerCase()
+
+      $(this).closest('li').appendTo(`#${formattedCat}`)
+
+      $.post(`/todos/${id}/${category}`).done(function(){});
+
+    })
+
     return output;
   }
 
@@ -132,15 +143,6 @@ $(function() {
         $('#uncategorized').append(listElement);
         break;
       }
-
-      $("button.dropdown-item").on("click", function(event) {
-        event.preventDefault();
-        var category = $(this).attr("data-category")
-        var formattedCat = category.replace(" ", "-").toLowerCase()
-
-        $(this).closest('li').appendTo(`#${formattedCat}`)
-
-      })
   }
 
   function renderLists(lists) {
