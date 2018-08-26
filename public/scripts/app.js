@@ -8,9 +8,4 @@ $(function() {
 
   //   });
   // });
-
-  // Load todos from server
-  // Render todo in relevant category
-  // 
-  
 });

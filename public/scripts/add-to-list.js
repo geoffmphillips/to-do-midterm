@@ -146,7 +146,13 @@ $(function() {
     var input = $(this).children("input");
     var todoText = input.serialize();
 
-    var category = "To Watch";
+    function fakeCategorize () {
+      var categories = ["To Eat", "To Buy", "To Watch", "To Read", null];
+      var functionCategory = categories[Math.floor(Math.random()*categories.length)]
+      return functionCategory;
+    }
+
+    var category = fakeCategorize()
 
     $.post('/todos', todoText).done(function(lists) {
       addToList(category, input.val());
