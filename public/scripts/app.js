@@ -34,7 +34,7 @@ $(function() {
   function createDeleteButton() {
     var output = $('<button>')
       .attr('type', 'submit')
-      .attr('class','btn btn-secondary delete');
+      .attr('class','btn btn-secondary delete btn-sm');
 
     var trashIcon = createTrashIcon();
 
@@ -51,7 +51,7 @@ $(function() {
   function createDropdownButton() {
     var output = $('<button>')
       .attr('id', 'dropdownMenuButton')
-      .attr('class', 'btn btn-secondary dropdown-toggle')
+      .attr('class', 'btn btn-secondary btn-sm')
       .attr('type', 'button')
       .attr('data-toggle', 'dropdown')
       .attr('aria-haspopup', 'true')
@@ -65,7 +65,7 @@ $(function() {
 
   function createEditIcon() {
     var output =$('<i>')
-      .attr('class', 'far fa-edit');
+      .attr('class', 'far fa-edit btn-sm');
     return output;
   }
 

@@ -39,12 +39,14 @@ body .card-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  align-items: flex-start;
 }
 body .card-container h1 {
   height: 100%;
 }
 body .card-container #card {
   padding: 0 0 0 0;
+  width: 20rem;
 }
 body .card-container #card h5 {
   margin: 0 0 0.6em 0.75em;
@@ -55,10 +57,18 @@ body .card-container #card div {
 body .card-container #card div li.list-group-item {
   display: flex;
   align-items: center;
+  padding: 20px 10px;
 }
 body .card-container #card div li.list-group-item p {
   margin: 0;
   flex-grow: 7;
+}
+body .card-container #card div li.list-group-item button#dropdownMenuButton {
+  margin: 0 1px;
+  height: 31px;
+}
+body .card-container #card div li.list-group-item button#dropdownMenuButton i {
+  padding: 4px 0;
 }
 
 /*# sourceMappingURL=layout.css.map */
