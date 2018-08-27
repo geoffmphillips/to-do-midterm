@@ -13,6 +13,7 @@ const knexConfig       = require("./knexfile");
 const knex             = require("knex")(knexConfig[ENV]);
 const morgan           = require('morgan');
 const knexLogger       = require('knex-logger');
+const google_api       = require('./lib/google_api.js');
 
 const usersDataHelpers = require('./lib/users-data-helpers.js')(knex);
 const todosDataHelpers = require('./lib/todos-data-helpers.js')(knex);
@@ -68,8 +69,7 @@ app.post("/todos", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      let extendedTodo = todosDataHelpers.multiplyWords(req.body.todo);
-      const todoObject = todosDataHelpers.createTodoObject(extendedTodo, rows.id, req.body.todo);
+      const todoObject = todosDataHelpers.createTodoObject(rows.id, req.body.todo);
       todosDataHelpers.saveTodo(todoObject, (err, rows) => {
         if (err) {
           console.log(err);

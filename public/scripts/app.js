@@ -34,7 +34,7 @@ $(function() {
   function createDeleteButton() {
     var output = $('<button>')
       .attr('type', 'submit')
-      .attr('class','btn btn-secondary delete')
+      .attr('class','btn btn-secondary delete');
 
     var trashIcon = createTrashIcon();
 
@@ -157,102 +157,5 @@ $(function() {
     $("ul#to-buy").empty();
     $("ul#uncategorized").empty();
     renderLists(lists);
-  });
-
-  $("form#new-list-item").on("submit", function(event) {
-    event.preventDefault();
-
-    var input = $(this).children("input");
-    var todoText = input.serialize();
-
-    // function multiplyWords(string) {
-    //   let extendedTodoString;
-    //   let splitString = string.split(' ');
-    //   let originalTodoLength = splitString.length;
-    //
-    //   if (splitString.length < 20) {
-    //     let wordsRemaining = 20 - splitString.length;
-    //
-    //     for (var i = 0; i < wordsRemaining; i++) {
-    //       splitString.push(splitString[i]);
-    //
-    //       if (splitString.length === 20) {
-    //         extendedTodoString = splitString.join(' ');
-    //         return extendedTodoString;
-    //       } else if (i === originalTodoLength - 1) {
-    //         i = -1;
-    //       }
-    //     }
-    //   } else {
-    //     return string;
-    //   }
-    // }
-    //
-    // var multipliedText = multiplyWords(input.val());
-    //
-    // function suggestCategory(text) {
-    //   const document = {
-    //     content: text,
-    //     type: 'PLAIN_TEXT',
-    //   };
-
-    //   client
-    //   .classifyText({ document: document })
-    //   .then(results => {
-    //     const classification = results[0];
-    //
-    //     classification.categories.forEach(category => {
-    //       suggestedCategories.push(category.name);
-    //     });
-    //     // console.log(suggestedCategories);
-    //     return suggestedCategories;
-    //   })
-    //   .then(suggestedCategories => {
-    //     // console.log(suggestedCategories);
-    //     if (suggestedCategories.length > 0) {
-    //       suggestedCategories.forEach((suggestedCategory) => {
-    //         for (let property in categories) {
-    //           categories[property].forEach((category) => {
-    //             if (suggestedCategory === category) {
-    //               if (confirmedCategory.length < 1) {
-    //                 confirmedCategory.push(property);
-    //               }
-    //               // console.log(confirmedCategory);
-    //             };
-    //           });
-    //         };
-    //       });
-    //       if (confirmedCategory.length === 0) {
-    //         console.log('no suggested categories match todo categories');
-    //         return null;
-    //       } else {
-    //         console.log(confirmedCategory[0]);
-    //         return confirmedCategory[0];
-    //       }
-    //     } else {
-    //       console.log("no suggestions!");
-    //       return null;
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.error('ERROR:', err);
-    //   });
-    // }
-    //
-    // var category = suggestCategory(multipliedText);
-
-    function fakeCategorize () {
-      var categories = ["To Eat", "To Buy", "To Watch", "To Read", null];
-      var functionCategory = categories[Math.floor(Math.random()*categories.length)]
-      return functionCategory;
-    }
-
-    var category = fakeCategorize()
-
-    $.post('/todos', todoText).done(function(lists) {
-      addToList(category, input.val());
-      input.val("");
-
-    });
   });
 });
