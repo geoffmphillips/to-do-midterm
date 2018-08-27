@@ -20,6 +20,6 @@
 
 ## Screenshots
 
-!["Screenshot of main Todo page"]()
+!["Screenshot of main Todo page"](https://github.com/da-morgan/to-do-midterm/blob/README/docs/Main%20Todo%20Page.png?raw=true)
 
-!["Screenshot of Login page"]()
+!["Screenshot of Login page"](https://github.com/da-morgan/to-do-midterm/blob/README/docs/Login%20View.png?raw=true)
