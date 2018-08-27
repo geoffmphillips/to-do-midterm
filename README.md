@@ -4,6 +4,7 @@
 
 ## Getting Started
 
+Todo is a smart todo list. Add something you want to do later on and we will sort it into one of four categories. Your todos will be easier to navigate and you'll find you get more done!
 
 1. Install dependencies: `npm i`
 2. Run the server: `npm run local`
@@ -12,11 +13,19 @@
 
 ## Dependencies
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
-- Bodyparser
-- Express
-- PSQL
+-  @google-cloud/language
+-  assert-plus
+-  body-parser
+-  cookie-parser
+-  dotenv
+-  ejs
+-  express
+-  knex
+-  knex-logger
+-  lodash
+-  morgan
+-  pg
+-  sass
 
 ## Screenshots
 
