@@ -1,21 +1,37 @@
-# Smart Todo List
+# todo
 
-- This project uses jQuery, Bootstrap,
+Smart todo list that automatically categorizes your todos. The Google Natural Language API is used to produce the category. This project uses jQuery, Bootstrap, Express, EJS, Knex/PostgreSQL, Bootstrap, Sass.
+
+## Final Product
+
+![Home page]()
+
+Home page with all tasks. The category of the todos can be changed via a dropdown menu. The todos can also be deleted. Any task that is uncategorized will be put into the generic "To Do" list.
+
+![Mobile version]()
+
+The responsive design allows for the web app to be used as a mobile web app.
 
 ## Getting Started
 
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
-7. Run the server: `npm run local`
-8. Visit `http://localhost:8080/`
+NOTE: Google Cloud API credentials are needed to use the categorization functionality of the app. The credentials must be downloaded as a JSON file. A .env file with a reference to the JSON file is needed as well ```GOOGLE_APPLICATION_CREDENTIALS="relative_path_to_file.json"```
+
+1. Clone this repo!
+2. Install dependencies with ```npm i```
+3. (OPTIONAL) Set up Google credentials as mentioned above.
 
 ## Dependencies
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+* Google Natural Language API
+* Assert-plu
+* Body-parser
+* Cookie-parser
+* Dotenv
+* EJS
+* Express
+* Knex
+* Knex-logger
+* Lodash
+* Morgan
+* Pg
+* Sass
