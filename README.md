@@ -10,7 +10,7 @@ Home page with all tasks. The category of the todos can be changed via a dropdow
 
 ![Mobile version](https://github.com/da-morgan/to-do-midterm/blob/master/img/mobile.png)
 
-The responsive design allows for the web app to be used as a mobile web app.
+Flexbox css was used to create the responsive design. This allows for the web app to be used as a mobile web app.
 
 ## Getting Started
 
