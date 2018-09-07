@@ -4,11 +4,11 @@ Smart todo list that automatically categorizes your todos. The Google Natural La
 
 ## Final Product
 
-![Home page]()
+![Home page](https://github.com/da-morgan/to-do-midterm/blob/master/img/todos.png)
 
 Home page with all tasks. The category of the todos can be changed via a dropdown menu. The todos can also be deleted. Any task that is uncategorized will be put into the generic "To Do" list.
 
-![Mobile version]()
+![Mobile version](https://github.com/da-morgan/to-do-midterm/blob/master/img/mobile.png)
 
 The responsive design allows for the web app to be used as a mobile web app.
 
